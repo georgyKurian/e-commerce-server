@@ -1,0 +1,39 @@
+{
+  "name": "e-commerce-server",
+  "version": "0.0.1",
+  "description": "API Server for the e-commerce site",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "watch": "nodemon --exec babel-node src/index.js",
+    "serve": "node dist/index.js",
+    "test": "mocha --require @babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgyKurian/e-commerce.git"
+  },
+  "keywords": [
+    "e-commerce"
+  ],
+  "author": "Georgy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/georgyKurian/e-commerce/issues"
+  },
+  "homepage": "https://github.com/georgyKurian/e-commerce#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^6.4.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.2"
+  }
+}
