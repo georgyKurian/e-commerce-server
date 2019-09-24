@@ -1,30 +1,45 @@
 import express from "express";
-import Usermodel from "./models/User";
+import users from "./mocks/users";
+import bodyParser from "body-parser";
+import logger from "./middlewear/logger";
+import  withAuthentication from "./middlewear/withAUthentication";
 
 const app = express();
-const port = 8055; //process.env.PORT
+const port = 8085; //process.env.PORT
 
-const user1 = new Usermodel({
-  id: 1,
-  username: "geo",
-  email: "geo@email.com",
-  role: "admin"
-});
-const user2 = new Usermodel({
-  id: 2,
-  username: "geo2",
-  email: "geo2@email.com",
-  role: "user"
-});
-const users = [user1.getData(), user2.getData()];
-console.log(users);
+// middlewears
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(withAuthentication);
+app.use(logger);
 
+// routes
 app.get("/", (req, res) => {
   res.send({ dateTime: new Date().toJSON() });
 });
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
+app.get('/v1/users', (req, res) => {
+  res.send(users);
+});
+
+app.get('/v1/users/:id', (req, res) => {
+  res.send(users[req.params.id]);
+});
+
+
+app.post('/v1/users', (req, res) => {
+  console.log(req.body);
+  res.send(users);
+});
+
+app.put('/v1/users/:id', (req, res) => {
+  console.log(req.params.id);
+  res.send(users);
+});
+
+app.delete('/v1/users/:id', (req, res) => {
+  console.log(req.params.id);
+  res.send(users);
 });
 
 // catch 404 and forward to error handler
@@ -40,7 +55,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err });
 });
 
 app.listen(port, () => {
