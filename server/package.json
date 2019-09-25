@@ -6,9 +6,11 @@
   "scripts": {
     "build": "babel src -d dist",
     "debug-build": "babel src -d dist --souce-maps",
-    "watch": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon --exec babel-node src/index.js",
     "serve": "node dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "db:create": "docker build . -t mongodb_dev",
+    "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,7 @@
     "babel-jest": "^24.9.0",
     "eslint": "^6.4.0",
     "jest": "^24.9.0",
+    "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
     "regenerator-runtime": "^0.13.3"
   }
