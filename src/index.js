@@ -2,7 +2,7 @@ import express from "express";
 import users from "./mocks/users";
 import bodyParser from "body-parser";
 import logger from "./middlewear/logger";
-import  withAuthentication from "./middlewear/withAUthentication";
+import  withAuthentication from "./middlewear/withAuthentication";
 
 const app = express();
 const port = 8085; //process.env.PORT
