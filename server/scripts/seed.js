@@ -1,4 +1,7 @@
 import mongoose, { schema, Schema } from "mongoose";
+import { users, products } from "./data";
+import { ProductModel } from "../models/Product";
+import { UserMOdel } from "../models/User";
 
 const UserSchema = new Schema({
   email: String,
@@ -14,7 +17,7 @@ db.on("error", error => {
   console.error(error);
 });
 
-db.on("open", () => {
+db.once("open", () => {
   console.log("Database connection is open!");
   const user = new UserModel({
     email: "jon1@test.ca",
