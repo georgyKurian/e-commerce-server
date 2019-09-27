@@ -8,10 +8,10 @@
     "debug-build": "babel src -d dist --souce-maps",
     "start": "nodemon --exec babel-node src/index.js",
     "serve": "node dist/index.js",
-    "test": "jest",
+    "test": "standard && jest",
     "db:create": "docker build . -t mongodb_dev",
     "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev",
-    "db:seed": "nodemon --inspect ./scripts/seed.js --exec babel-node"
+    "db:seed": "babel-node ./scripts/seed.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
   "homepage": "https://github.com/georgyKurian/e-commerce#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -45,11 +46,15 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.4.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
-    "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
-    "regenerator-runtime": "^0.13.3"
+    "prettier": "^1.18.2",
+    "regenerator-runtime": "^0.13.3",
+    "standard": "^14.3.1"
   }
 }

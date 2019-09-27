@@ -1,34 +1,30 @@
-import mongoose, { schema, Schema } from "mongoose";
+import mongoose from "mongoose";
 import { users, products } from "./data";
 import { ProductModel } from "../models/Product";
-import { UserMOdel } from "../models/User";
+import { UserModel } from "../models/User";
 
-const UserSchema = new Schema({
-  email: String,
-  username: String,
-  role: String
-});
-const UserModel = mongoose.model("User", UserSchema);
-//mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect("mongodb+srv://ecommerceapp:Q35JgRaiYKe5@e-commerce-1n6e9.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(
+  "mongodb+srv://ecommerceapp:Q35JgRaiYKe5@e-commerce-1n6e9.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
 const db = mongoose.connection;
 
-db.on("error", error => {
-  console.error(error);
-});
+db.on("error", console.error.bind(console, "connection error:"));
 
-db.once("open", () => {
+db.once("open", function() {
   console.log("Database connection is open!");
-  const user = new UserModel({
-    email: "jon1@test.ca",
-    username: "jon2@test.ca",
-    role: "customer"
+
+  const promise1 = UserModel.insertMany(users);
+  console.log(typeof promise1);
+  promise1.then(() => {
+    console.log("Working");
   });
-  user.save(error => {
+  ProductModel.insertMany(products, error => {
     if (error) {
-      console.error(error);
-    } else {
-      console.log("User saved");
+      console.log(error);
     }
+  }).then(doc => {
+    console.log("Seeded PRODUCT data!");
   });
 });

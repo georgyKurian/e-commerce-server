@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export default class Product {
   /**
    * @param  {string} id
@@ -42,3 +44,11 @@ export default class Product {
     images: this._images
   });
 }
+
+export const ProductSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  images: [String]
+});
+export const ProductModel = mongoose.model("Product", ProductSchema);
+
