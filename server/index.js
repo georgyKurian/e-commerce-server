@@ -2,14 +2,15 @@ import express from "express";
 import users from "./mocks/users";
 import bodyParser from "body-parser";
 import logger from "./middlewear/logger";
-import  withAuthentication from "./middlewear/withAuthentication";
-
+import withAuthentication from "./middlewear/withAuthentication";
+import db from "db/index";
+import UserModel from "models/User";
 const app = express();
-const port = 8085; //process.env.PORT
+const port = 8085; // process.env.PORT
 
 // middlewears
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(withAuthentication);
 app.use(logger);
 
@@ -18,26 +19,26 @@ app.get("/", (req, res) => {
   res.send({ dateTime: new Date().toJSON() });
 });
 
-app.get('/v1/users', (req, res) => {
+app.get("/v1/users", async (req, res) => {
+  const users = (await UserModel.find()) || [];
   res.send(users);
 });
 
-app.get('/v1/users/:id', (req, res) => {
+app.get("/v1/users/:id", (req, res) => {
   res.send(users[req.params.id]);
 });
 
-
-app.post('/v1/users', (req, res) => {
+app.post("/v1/users", (req, res) => {
   console.log(req.body);
   res.send(users);
 });
 
-app.put('/v1/users/:id', (req, res) => {
+app.put("/v1/users/:id", (req, res) => {
   console.log(req.params.id);
   res.send(users);
 });
 
-app.delete('/v1/users/:id', (req, res) => {
+app.delete("/v1/users/:id", (req, res) => {
   console.log(req.params.id);
   res.send(users);
 });
