@@ -11,7 +11,7 @@
     "test": "jest",
     "db:create": "docker build . -t mongodb_dev",
     "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev",
-    "db:seed": "PORT=8085 nodemon --inspect ./scripts/seed.js --exec babel-node"
+    "db:seed": "nodemon --inspect ./scripts/seed.js --exec babel-node"
   },
   "repository": {
     "type": "git",
