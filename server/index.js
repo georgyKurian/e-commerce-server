@@ -3,8 +3,10 @@ import users from "./mocks/users";
 import bodyParser from "body-parser";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
-import db from "db/index";
-import UserModel from "models/User";
+import db from "./db/index";
+import { UserModel } from "./models/User";
+import { ProductModel } from "./models/Product";
+
 const app = express();
 const port = 8085; // process.env.PORT
 
@@ -24,8 +26,18 @@ app.get("/v1/users", async (req, res) => {
   res.send(users);
 });
 
-app.get("/v1/users/:id", (req, res) => {
-  res.send(users[req.params.id]);
+app.get("/v1/users/:id", async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id);
+    console.log(user);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(400).end();
+    }
+  } catch (e) {
+    res.status(404).end();
+  }
 });
 
 app.post("/v1/users", (req, res) => {
@@ -33,12 +45,44 @@ app.post("/v1/users", (req, res) => {
   res.send(users);
 });
 
-app.put("/v1/users/:id", (req, res) => {
+app.put("/v1/users/:id", async (req, res) => {
+  res.status(400).end();
+});
+
+app.delete("/v1/users/:id", (req, res) => {
   console.log(req.params.id);
   res.send(users);
 });
 
-app.delete("/v1/users/:id", (req, res) => {
+
+app.get("/v1/products", async (req, res) => {
+  const products = (await ProductModel.find()) || [];
+  res.send(products);
+});
+
+app.get("/v1/products/:id", async (req, res) => {
+  try {
+    const product = await ProductModel.findById(req.params.id);
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(400).end();
+    }
+  } catch (e) {
+    res.status(404).end();
+  }
+});
+
+app.post("/v1/products", (req, res) => {
+  console.log(req.body);
+  res.send(users);
+});
+
+app.put("/v1/products/:id", async (req, res) => {
+  res.statusCode(400);
+});
+
+app.delete("/v1/products/:id", (req, res) => {
   console.log(req.params.id);
   res.send(users);
 });
