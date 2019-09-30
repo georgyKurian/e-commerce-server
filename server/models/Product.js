@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { tsMethodSignature } from "@babel/types";
 
 export default class Product {
   /**
@@ -7,7 +8,7 @@ export default class Product {
    * @param  {number} price
    * @param  {Array.<string>} images
    */
-  constructor({ id, name, price, images }) {
+  constructor({ id, name, price, images, categories }) {
     this._id = id;
     this._name = name;
     this._price = price;
@@ -41,14 +42,15 @@ export default class Product {
     id: this._id,
     name: this._name,
     price: this._price,
-    images: this._images
+    images: this._images,
+    categories: this._categories
   });
 }
 
 export const ProductSchema = new mongoose.Schema({
   name: String,
   price: Number,
-  images: [String]
+  images: [String],
+  categories: [String]
 });
 export const ProductModel = mongoose.model("Product", ProductSchema);
-
