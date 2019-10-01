@@ -1,12 +1,11 @@
 import express from "express";
-import users from "./mocks/users";
 import bodyParser from "body-parser";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
 import db from "./db/index";
 import dotenv from "dotenv";
 import getProductsRoutes from "./routes/products";
-import getUserRoutes from "./routes/user";
+import getUserRoutes from "./routes/users";
 
 dotenv.config();
 const app = express();

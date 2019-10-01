@@ -2,11 +2,8 @@ import { ProductModel } from "../models/Product";
 
 export default app => {
   app.get("/v1/products", async (req, res) => {
-    const { categories, maxPrice, minPrice } = req.query;
+    const { categories } = req.query;
     const categoryList = categories ? categories.split(",") : [];
-    let filter = {
-      categories: { $in: categoryList }
-    };
 
     const products =
       (await ProductModel.find(
@@ -32,6 +29,9 @@ export default app => {
 
   app.post("/v1/products", async (req, res) => {
     try {
+      if (!req.isAdmin) {
+        return res.status(403).end();
+      }
       const product = await ProductModel.create(req.body);
       if (product) {
         res.send(product).end();
@@ -45,6 +45,9 @@ export default app => {
 
   app.put("/v1/products/:id", async (req, res) => {
     try {
+      if (!req.isAdmin) {
+        return res.status(403).end();
+      }
       await ProductModel.findOneAndUpdate(
         { _id: req.params.id },
         req.body,
@@ -65,6 +68,9 @@ export default app => {
 
   app.delete("/v1/products/:id", async (req, res) => {
     try {
+      if (!req.isAdmin) {
+        return res.status(403).end();
+      }
       await ProductModel.findOneAndDelete({ _id: req.params.id }, function(
         err,
         updatedProduct
