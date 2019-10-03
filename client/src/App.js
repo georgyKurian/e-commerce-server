@@ -1,54 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./App.css";
-import DynamicCounter from "./components/DynamicCounter";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import FormDemo from "./pages/FormDemo";
+import NotFound from "./pages/NotFound";
 
 class App extends Component {
-  state = {
-    Apples: 5,
-    Oranges: 5,
-    Grapes: 5
-  };
-
-  increment = key => () => {
-    this.setState({
-      [key]: this.state[key] + 1
-    });
-  };
-
-  decrement = key => () => {
-    this.setState({
-      [key]: this.state[key] - 1
-    });
-  };
-
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <DynamicCounter
-            label="Apples"
-            max={5}
-            min={2}
-            increment={this.increment}
-            decrement={this.decrement}
-            value={this.state.Apples}
-          />
-          <DynamicCounter
-            label="Oranges"
-            max={7}
-            min={2}
-            increment={this.increment}
-            decrement={this.decrement}
-            value={this.state.Oranges}
-          />
-          <DynamicCounter
-            label="Grapes"
-            max={6}
-            min={4}
-            increment={this.increment}
-            decrement={this.decrement}
-            value={this.state.Grapes}
-          />
+          <Router>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/forms" exact component={FormDemo} />
+              <Route component={NotFound} />
+            </Switch>
+          </Router>
         </header>
       </div>
     );
