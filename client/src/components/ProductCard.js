@@ -33,7 +33,7 @@ export default class ProducrCard extends Component {
           onMouseLeave={this.handleMouseLeave}
         />
         <h3>{this.props.name}</h3>
-        <p>{this.props.price}</p>
+        <p>${this.props.price}</p>
       </div>
     );
   }

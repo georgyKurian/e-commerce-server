@@ -5,7 +5,7 @@ export default [
     price: 11662,
     images: [
       "https://robohash.org/nequevoluptasodit.png?size=720x1080&set=set1",
-      "https://robohash.org/nequevoluptasodit.png?size=720x1080&set=set1"
+      "https://robohash.org/nequevoluptasodit.png?size=720x1080&set=set2"
     ]
   },
   {
@@ -14,7 +14,7 @@ export default [
     price: 78634,
     images: [
       "https://robohash.org/liberomolestiaeomnis.bmp?size=720x1080&set=set1",
-      "https://robohash.org/liberomolestiaeomnis.bmp?size=720x1080&set=set1"
+      "https://robohash.org/liberomolestiaeomnis.bmp?size=720x1080&set=set2"
     ]
   },
   {
@@ -23,7 +23,7 @@ export default [
     price: 73109,
     images: [
       "https://robohash.org/quaeomnisducimus.bmp?size=720x1080&set=set1",
-      "https://robohash.org/quaeomnisducimus.bmp?size=720x1080&set=set1"
+      "https://robohash.org/quaeomnisducimus.bmp?size=720x1080&set=set2"
     ]
   },
   {
@@ -32,7 +32,7 @@ export default [
     price: 17219,
     images: [
       "https://robohash.org/quoutmaxime.bmp?size=720x1080&set=set1",
-      "https://robohash.org/quoutmaxime.bmp?size=720x1080&set=set1"
+      "https://robohash.org/quoutmaxime.bmp?size=720x1080&set=set2"
     ]
   },
   {
@@ -41,7 +41,7 @@ export default [
     price: 55995,
     images: [
       "https://robohash.org/saepequasirerum.jpg?size=720x1080&set=set1",
-      "https://robohash.org/saepequasirerum.jpg?size=720x1080&set=set1"
+      "https://robohash.org/saepequasirerum.jpg?size=720x1080&set=set2"
     ]
   },
   {
@@ -50,7 +50,7 @@ export default [
     price: 18286,
     images: [
       "https://robohash.org/velautvoluptas.png?size=720x1080&set=set1",
-      "https://robohash.org/velautvoluptas.png?size=720x1080&set=set1"
+      "https://robohash.org/velautvoluptas.png?size=720x1080&set=set2"
     ]
   },
   {
@@ -59,7 +59,7 @@ export default [
     price: 38255,
     images: [
       "https://robohash.org/voluptatumeta.bmp?size=720x1080&set=set1",
-      "https://robohash.org/voluptatumeta.bmp?size=720x1080&set=set1"
+      "https://robohash.org/voluptatumeta.bmp?size=720x1080&set=set2"
     ]
   },
   {
@@ -68,7 +68,7 @@ export default [
     price: 58507,
     images: [
       "https://robohash.org/magnamipsumvero.png?size=720x1080&set=set1",
-      "https://robohash.org/magnamipsumvero.png?size=720x1080&set=set1"
+      "https://robohash.org/magnamipsumvero.png?size=720x1080&set=set2"
     ]
   },
   {
@@ -77,7 +77,7 @@ export default [
     price: 53063,
     images: [
       "https://robohash.org/voluptasvelitdicta.bmp?size=720x1080&set=set1",
-      "https://robohash.org/voluptasvelitdicta.bmp?size=720x1080&set=set1"
+      "https://robohash.org/voluptasvelitdicta.bmp?size=720x1080&set=set2"
     ]
   },
   {
@@ -86,7 +86,7 @@ export default [
     price: 66894,
     images: [
       "https://robohash.org/aperiaminventoresed.png?size=720x1080&set=set1",
-      "https://robohash.org/aperiaminventoresed.png?size=720x1080&set=set1"
+      "https://robohash.org/aperiaminventoresed.png?size=720x1080&set=set2"
     ]
   }
 ];

@@ -9,15 +9,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <Router>
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/forms" exact component={FormDemo} />
-              <Route component={NotFound} />
-            </Switch>
-          </Router>
-        </header>
+        <header className="App-header"></header>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/forms" exact component={FormDemo} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
       </div>
     );
   }
