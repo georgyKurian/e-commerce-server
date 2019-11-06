@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
 import db from "./db/index";
@@ -10,8 +11,13 @@ import getUserRoutes from "./routes/users";
 dotenv.config();
 const app = express();
 const port = process.env.PORT; // process.env.PORT
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200
+};
 
 // middlewears
+app.use(cors(process.env === "production" ? corsOptions : undefined));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(withAuthentication);
