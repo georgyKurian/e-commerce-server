@@ -7,7 +7,12 @@ export default class ProductList extends Component {
     return (
       <div className="ProductList">
         {this.props.products.map(product => (
-          <ProductCard key={product.id} {...product} />
+          <ProductCard
+            key={product.getId()}
+            name={product.getName()}
+            images={product.getImages()}
+            price={product.getFormattedPrice()}
+          />
         ))}
       </div>
     );
