@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getProducts } from "../api/Product";
-import ProductList from "../components/ProductList";
+import ProductList from "../components/product/ProductList";
 import LoadingIndicator from "../components/LoadingIndicator";
 
 export default class Home extends Component {

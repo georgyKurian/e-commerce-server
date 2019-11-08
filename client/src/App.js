@@ -10,6 +10,8 @@ import Account from "./pages/Account";
 import Category from "./pages/Category";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
+import ProductManagement from "./pages/admin/ProductManagement";
+import UserManagement from "./pages/admin/UserManagement";
 import NavigationBar from "./components/NavigationBar";
 
 class App extends Component {
@@ -66,6 +68,8 @@ class App extends Component {
             />
             <Route path="/orders" exact component={Orders} />
             <Route path="/account" exact component={Account} />
+            <Route path="/admin/users" exact component={UserManagement} />
+            <Route path="/admin/product" exact component={ProductManagement} />
             <Route path="/category/:slug" exact component={Category} />
             <Route path="/products/:id" exact component={this.ProductPage} />
             <Route component={NotFound} />

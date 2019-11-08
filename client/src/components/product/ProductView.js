@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PrimaryButton } from "./Button";
+import { PrimaryButton } from "../Button";
 
 export default class ProductView extends Component {
   addToCart = () => {

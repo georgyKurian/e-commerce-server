@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Product from "../models/Product";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/product/ProductCard";
 
 export default class Cart extends Component {
   render() {
