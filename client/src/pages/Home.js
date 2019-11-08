@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import products from "../data/Products";
 import { getProducts } from "../api/Product";
 import ProductList from "../components/ProductList";
 import LoadingIndicator from "../components/LoadingIndicator";

@@ -8,11 +8,14 @@ export default class Form extends Component {
     return (
       <div className="NavigationBar">
         <Link to="/">Home</Link>
-        <Link to="/category/tshirts">#tshirts</Link>
-        <Link to="/category/jackets">#jackets</Link>
+        <Link to="/category/online">#online</Link>
+        <Link to="/category/mobile">#mobile</Link>
         {isLoggedIn ? (
           <Fragment>
-            <Link to="/cart">my cart</Link>
+            <Link to="/cart">
+              my cart
+              {this.props.itemsInCart > 0 ? `(${this.props.itemsInCart})` : ``}
+            </Link>
             <Link to="/orders">orders</Link>
           </Fragment>
         ) : (
