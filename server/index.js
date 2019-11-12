@@ -7,6 +7,7 @@ import db from "./db/index";
 import dotenv from "dotenv";
 import getProductsRoutes from "./routes/products";
 import getUserRoutes from "./routes/users";
+import getAuthRoutes from "./routes/auth";
 
 dotenv.config();
 const app = express();

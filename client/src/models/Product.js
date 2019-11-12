@@ -44,6 +44,7 @@ export default class Product {
     _id: this._id,
     name: this._name,
     price: this._price,
+    formattedPrice: this.getFormattedPrice(),
     images: this._images,
     categories: this._categories
   });

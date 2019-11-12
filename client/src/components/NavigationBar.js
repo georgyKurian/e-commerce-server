@@ -4,7 +4,7 @@ import "./NavigationBar.css";
 
 export default class Form extends Component {
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
     return (
       <div className="NavigationBar">
         <Link to="/">Home</Link>
@@ -21,6 +21,12 @@ export default class Form extends Component {
         ) : (
           <Link to="/account">account</Link>
         )}
+        {isAdmin ? (
+          <Fragment>
+            <Link to="/admin/users">Users</Link>
+            <Link to="/admin/products">Products</Link>
+          </Fragment>
+        ) : ``}
       </div>
     );
   }

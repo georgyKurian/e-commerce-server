@@ -11,8 +11,8 @@ export default class User {
    * @param  {string} email
    * @param  {string} role
    */
-  constructor({ id, username, email, role }) {
-    this._id = id;
+  constructor({ _id, username, email, role }) {
+    this._id = _id;
     this._username = username;
     this._email = email;
     this._role = role;
@@ -42,7 +42,7 @@ export default class User {
    * @return {string}
    */
   getData = () => ({
-    id: this._id,
+    _id: this._id,
     username: this._username,
     email: this._email,
     role: this._role

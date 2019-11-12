@@ -54,6 +54,7 @@ class App extends Component {
             <NavigationBar
               isLoggedIn={true}
               itemsInCart={this.state.itemsInCart.length}
+              isAdmin={true}
             ></NavigationBar>
           </header>
           <Switch>
@@ -69,7 +70,7 @@ class App extends Component {
             <Route path="/orders" exact component={Orders} />
             <Route path="/account" exact component={Account} />
             <Route path="/admin/users" exact component={UserManagement} />
-            <Route path="/admin/product" exact component={ProductManagement} />
+            <Route path="/admin/products" exact component={ProductManagement} />
             <Route path="/category/:slug" exact component={Category} />
             <Route path="/products/:id" exact component={this.ProductPage} />
             <Route component={NotFound} />

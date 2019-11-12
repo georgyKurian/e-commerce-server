@@ -1,10 +1,10 @@
 import axios from "./axios";
-import Product from "../models/Product";
+import User from "../models/User";
 
 export const getUsers = async () => {
   try {
     const { data } = await axios.get(`v1/users`);
-    return data.map(product => new Product(product));
+    return data.map(user => new User(user));
   } catch (error) {
     console.error(error);
   }
@@ -13,7 +13,7 @@ export const getUsers = async () => {
 export const getUser = async id => {
   try {
     const { data } = await axios.get(`v1/users/${id}`);
-    return new Product(data);
+    return new User(data);
   } catch (error) {
     console.error(error);
   }

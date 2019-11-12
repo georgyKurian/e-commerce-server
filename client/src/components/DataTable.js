@@ -1,7 +1,8 @@
+import React, { Component } from "react";
 import SpicyDataTable from "spicy-datatable";
-import "./DataTable";
+import "./DataTable.css";
 
-export default class DataTable extends Components {
+export default class DataTable extends Component {
   render() {
     return (
       <SpicyDataTable
