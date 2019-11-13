@@ -26,6 +26,7 @@ app.use(logger);
 
 getProductsRoutes(app);
 getUserRoutes(app);
+getAuthRoutes(app);
 
 // routes
 

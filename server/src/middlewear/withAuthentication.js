@@ -1,4 +1,7 @@
 import jwt from "express-jwt";
+import dotenv from "dotenv";
+
+dotenv.config({path: "./server/.env"});
 
 export default jwt({
   secret: process.env.JWT_SECRET,

@@ -7,8 +7,31 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Client - Debugging",
       "program": "${workspaceFolder}/client/src/index.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Server - nodemon",
+      "program": "${workspaceFolder}/server/src/index.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}",
+      "preLaunchTask": "npm: debug-build - server",
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "trace":true,
+      "outFiles": [
+        "${workspaceRoot}/server/dist/**.js"
+      ]
     }
   ]
 }
