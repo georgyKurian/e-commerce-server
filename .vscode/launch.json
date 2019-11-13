@@ -5,10 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "name": "Client - Debugging",
-      "program": "${workspaceFolder}/client/src/index.js"
+      "name": "Client Chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/client/src"
     },
     {
       "type": "node",
