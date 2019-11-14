@@ -16,7 +16,7 @@ export default class ProductManagement extends Component {
   };
 
   componentDidMount = async () => {
-    const products = await getProducts();
+    const products = await getProducts() || [];
     this.setState({
       products: products.map(product => product.getData()),
       isLoading: false

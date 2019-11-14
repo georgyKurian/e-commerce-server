@@ -9,7 +9,8 @@
       "request": "launch",
       "name": "Client Chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client/src"
+      "webRoot": "${workspaceFolder}/client/src",
+      "cwd": "${workspaceFolder}/client",
     },
     {
       "type": "node",
@@ -29,7 +30,7 @@
       },
       "console": "integratedTerminal",
       "sourceMaps": true,
-      "trace":true,
+      "trace": true,
       "outFiles": [
         "${workspaceRoot}/server/dist/**.js"
       ]

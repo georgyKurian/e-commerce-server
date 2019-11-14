@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import Auth from "./pages/Auth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from "store2";
 import Home from "./pages/Home";
@@ -7,19 +8,38 @@ import FormDemo from "./pages/FormDemo";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import Account from "./pages/Account";
+import Logout from "./pages/Logout";
 import Category from "./pages/Category";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import ProductManagement from "./pages/admin/ProductManagement";
 import UserManagement from "./pages/admin/UserManagement";
 import NavigationBar from "./components/NavigationBar";
+import { getCurrentUser } from "./api/Auth";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { itemsInCart: store.get("itemsInCart") || [] };
+    this.state = {
+      itemsInCart: store.get("itemsInCart") || [],
+      user: undefined
+    };
     this.ProductPage = Product(this.addToCart);
   }
+
+  authUser = async () => {
+    const result = await getCurrentUser();
+    if (result && result.data) {
+      this.setState({ user: result.data });
+    } else {
+      this.setState({ user: undefined });
+    }
+  };
+
+  logoutUser = async () => {
+    await store.remove("authToken");
+    this.setState({ user: undefined });
+  };
 
   addToCart = item => {
     console.log("Added!");
@@ -37,28 +57,33 @@ class App extends Component {
   };
 
   componentDidMount = () => {
+    this.authUser();
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
         this.setState({
           itemsInCart: store.get("itemsInCart") || []
         });
+        this.authUser();
       }
     });
   };
 
   render() {
+    const isLoggedIn = this.state.user && this.state.user._id;
+    const isAdmin = isLoggedIn && this.state.user.role === "admin";
     return (
       <Router>
         <div className="App">
           <header className="App-header">
             <NavigationBar
-              isLoggedIn={true}
+              isLoggedIn={isLoggedIn}
               itemsInCart={this.state.itemsInCart.length}
-              isAdmin={true}
+              isAdmin={isAdmin}
             ></NavigationBar>
           </header>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/auth/:token" exact component={Auth(this.authUser)} />
             <Route path="/forms" exact component={FormDemo} />
             <Route
               path="/cart"
@@ -69,8 +94,17 @@ class App extends Component {
             />
             <Route path="/orders" exact component={Orders} />
             <Route path="/account" exact component={Account} />
-            <Route path="/admin/users" exact component={UserManagement} />
-            <Route path="/admin/products" exact component={ProductManagement} />
+            <Route path="/logout" exact component={Logout(this.logoutUser)} />
+            {isAdmin && (
+              <Route path="/admin/users" exact component={UserManagement} />
+            )}
+            {isAdmin && (
+              <Route
+                path="/admin/products"
+                exact
+                component={ProductManagement}
+              />
+            )}
             <Route path="/category/:slug" exact component={Category} />
             <Route path="/products/:id" exact component={this.ProductPage} />
             <Route component={NotFound} />

@@ -10,23 +10,24 @@ export default class Form extends Component {
         <Link to="/">Home</Link>
         <Link to="/category/online">#online</Link>
         <Link to="/category/mobile">#mobile</Link>
-        {isLoggedIn ? (
-          <Fragment>
-            <Link to="/cart">
-              my cart
-              {this.props.itemsInCart > 0 ? `(${this.props.itemsInCart})` : ``}
-            </Link>
-            <Link to="/orders">orders</Link>
-          </Fragment>
-        ) : (
-          <Link to="/account">account</Link>
-        )}
-        {isAdmin ? (
+        {isAdmin && (
           <Fragment>
             <Link to="/admin/users">Users</Link>
             <Link to="/admin/products">Products</Link>
           </Fragment>
-        ) : ``}
+        )}
+        {isLoggedIn ? (
+          <Fragment>
+            <Link to="/orders">Orders</Link>
+            <Link to="/cart">
+              My Cart
+              {this.props.itemsInCart > 0 ? `(${this.props.itemsInCart})` : ``}
+            </Link>
+            <Link to="/logout">Logout</Link>
+          </Fragment>
+        ) : (
+          <Link to="/account">Login</Link>
+        )}
       </div>
     );
   }

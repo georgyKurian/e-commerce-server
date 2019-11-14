@@ -15,7 +15,7 @@ export default class UserManagement extends Component {
     isLoading: true
   };
   componentDidMount = async () => {
-    const users = await getUsers();
+    const users = await getUsers() || [];
     this.setState({
       users: users
         .filter(user => user.getRole() === "customer")
