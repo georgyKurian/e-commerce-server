@@ -4,10 +4,10 @@ export default (req, res, next) => {
     req.method,
     req.originalUrl,
     " || ",
-    "is Authenticated: ",
+    "is Authenticated:",
     typeof req.user === "object",
-    "is Admin: ",
-    req.user && req.user.role === "admin"
+    ",is Admin:",
+    req.isAdmin
   );
   next();
 };

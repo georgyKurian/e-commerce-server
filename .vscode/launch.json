@@ -15,10 +15,10 @@
       "type": "node",
       "request": "launch",
       "name": "Server - nodemon",
+      "cwd": "${workspaceFolder}/server",
       "program": "${workspaceFolder}/server/src/index.js",
       "stopOnEntry": false,
       "args": [],
-      "cwd": "${workspaceRoot}",
       "preLaunchTask": "npm: debug-build - server",
       "runtimeExecutable": null,
       "runtimeArgs": [
