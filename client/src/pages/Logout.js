@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
 class Logout extends Component {
-  componentDidMount = () => {
-    this.props.logoutUser();
+  componentDidMount = async () => {
+    await this.props.logoutUser();
+    this.props.history.push('/');
   };
 
   render() {
-    return null;
+    return '';
   }
 }
 

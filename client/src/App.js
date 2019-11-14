@@ -37,8 +37,8 @@ class App extends Component {
   };
 
   logoutUser = async () => {
-    await store.remove("authToken");
-    this.setState({ user: undefined });
+    await store.clear();
+    this.setState({ itemsInCart: [], user: undefined });
   };
 
   addToCart = item => {
@@ -53,7 +53,7 @@ class App extends Component {
     const { itemsInCart } = this.state;
     itemsInCart.splice(index, 1);
     this.setState({ itemsInCart });
-    store.set("itemsInCart", itemsInCart);
+    store.set("itemsInCart", itemsInCart);    
   };
 
   componentDidMount = () => {
