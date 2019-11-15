@@ -42,10 +42,10 @@ export const placeOrder = async body => {
   }
 };
 
-export const getProduct = async id => {
+export const getUserOrders = async () => {
   try {
-    const { data } = await axios.get(`v1/orders${id ? `/${id}` : ""}`);
-    return new Order(data);
+    const { data } = await axios.get("v1/orders");
+    return data ? data.map(orderData => new Order(orderData)) : null;
   } catch (error) {
     console.error(error);
   }

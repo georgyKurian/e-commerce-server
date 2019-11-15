@@ -6,9 +6,12 @@ export default app => {
     res.send(orders);
   });
 
-  app.get("/v1/orders/:id", async (req, res) => {
+  app.get("/v1/orders", async (req, res) => {
     try {
-      const order = await OrderModel.findById(req.params.id);
+      if (req.user === undefined) {
+        res.status(401).end();
+      }
+      const order = await OrderModel.find({ customer: req.user.data._id });
       if (order) {
         res.send(order);
       } else {
