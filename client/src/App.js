@@ -53,7 +53,12 @@ class App extends Component {
     const { itemsInCart } = this.state;
     itemsInCart.splice(index, 1);
     this.setState({ itemsInCart });
-    store.set("itemsInCart", itemsInCart);    
+    store.set("itemsInCart", itemsInCart);
+  };
+
+  emptyCart = async () => {
+    await store.set("itemsInCart", []);
+    this.setState({ itemsInCart: [] });
   };
 
   componentDidMount = () => {
@@ -88,8 +93,13 @@ class App extends Component {
             <Route
               path="/cart"
               exact
-              component={props => (
-                <Cart {...props} items={this.state.itemsInCart} />
+              render={props => (
+                <Cart
+                  {...props}
+                  items={this.state.itemsInCart}
+                  removeFromCart={this.removeFromCart}
+                  emptyCart={this.emptyCart}
+                />
               )}
             />
             <Route path="/orders" exact component={Orders} />

@@ -1,14 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import db from "./db/index";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
 import withAdminPermission from "./middlewear/withAdminPermission";
-import db from "./db/index";
 import dotenv from "dotenv";
 import getProductsRoutes from "./routes/products";
 import getUserRoutes from "./routes/users";
 import getAuthRoutes from "./routes/auth";
+import getOrderRoutes from "./routes/orders";
 
 dotenv.config();
 
@@ -27,15 +28,15 @@ app.use(withAuthentication);
 app.use(withAdminPermission);
 app.use(logger);
 
+// routes
 getProductsRoutes(app);
 getUserRoutes(app);
 getAuthRoutes(app);
+getOrderRoutes(app);
 
-// routes
-
-// catch 404 and forward to error handler
+// Catches 404
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(400).end();
 });
 
 // error handler

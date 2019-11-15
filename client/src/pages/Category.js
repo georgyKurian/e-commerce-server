@@ -12,14 +12,14 @@ export default class Category extends Component {
 
   componentDidMount = async () => {
     const { slug } = this.props.match.params;
-    const products = await getProducts(slug);
+    const products = await getProducts(slug) || [];
     this.setState({ products, slug, loading: false });
   };
   
   componentDidUpdate = async () => {
     const { slug } = this.props.match.params;
     if( slug !== this.state.slug ){
-      const products = await getProducts(slug);
+      const products = await getProducts(slug) || [];
       this.setState({ products, slug, loading: false });
     }    
   };
