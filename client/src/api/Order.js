@@ -18,8 +18,6 @@ export const placeOrder = async body => {
         error: "An unknown error occured. Please, retry again later."
       };
     }
-    console.log("placeOrder", data);
-    return data;
   } catch (error) {
     switch (error.response.status) {
       case 400:
