@@ -2,18 +2,14 @@ import { OrderModel } from "../models/Order";
 
 export default app => {
   app.get("/v1/orders", async (req, res) => {
-    const orders = (await OrderModel.find()) || [];
-    res.send(orders);
-  });
-
-  app.get("/v1/orders", async (req, res) => {
     try {
       if (req.user === undefined) {
         res.status(401).end();
       }
-      const order = await OrderModel.find({ customer: req.user.data._id });
-      if (order) {
-        res.send(order);
+      const orders =
+        (await OrderModel.find({ customer: req.user.data._id })) || [];
+      if (orders) {
+        res.send(orders);
       } else {
         res.status(400).end();
       }
