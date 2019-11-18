@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 
-export default class Form extends Component {
+export default class NavigationBar extends Component {
   render() {
     const { isLoggedIn, isAdmin } = this.props;
     return (
@@ -32,3 +34,9 @@ export default class Form extends Component {
     );
   }
 }
+
+NavigationBar.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
+  itemsInCart: PropTypes.number
+};

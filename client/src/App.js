@@ -74,8 +74,13 @@ class App extends Component {
   };
 
   render() {
-    const isLoggedIn = this.state.user && this.state.user._id;
-    const isAdmin = isLoggedIn && this.state.user.role === "admin";
+    let isLoggedIn = false;
+    let isAdmin = false;
+    if (this.state.user && this.state.user._id) {
+      isLoggedIn = true;
+      isAdmin = isLoggedIn && this.state.user.role === "admin";
+    }
+
     return (
       <Router>
         <div className="App">

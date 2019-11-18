@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
+import PropTypes from "prop-types";
+import Product from "../../models/Product";
 import "./ProductList.css";
 
 export default class ProductList extends Component {
@@ -20,3 +22,9 @@ export default class ProductList extends Component {
     );
   }
 }
+
+ProductList.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.instanceOf(Product).isRequired
+  )
+};

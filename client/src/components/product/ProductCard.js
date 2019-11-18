@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./ProductCard.css";
 import { SecondaryButton } from "../Button";
+import PropTypes from "prop-types";
 
 export default class ProducrCard extends Component {
   constructor(props) {
@@ -36,9 +37,19 @@ export default class ProducrCard extends Component {
         <h3>{this.props.name}</h3>
         <p>{this.props.price}</p>
         {this.props.withRemoveButton && (
-          <SecondaryButton onClick={this.props.onRemove}>Remove</SecondaryButton>
+          <SecondaryButton onClick={this.props.onRemove}>
+            Remove
+          </SecondaryButton>
         )}
       </div>
     );
   }
 }
+
+ProducrCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string),
+  withRemoveButton: PropTypes.bool,
+  onRemove: PropTypes.func
+};

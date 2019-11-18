@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ProductCard from "../product/ProductCard";
+import Order from "../../models/Order";
 
 export default class OrderCard extends Component {
   render() {
@@ -21,3 +23,7 @@ export default class OrderCard extends Component {
     );
   }
 }
+
+OrderCard.propTypes = {
+  order: PropTypes.instanceOf(Order)
+};

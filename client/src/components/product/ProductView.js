@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { PrimaryButton } from "../Button";
+import PropTypes from "prop-types";
+import Product from "../../models/Product";
 
 export default class ProductView extends Component {
   addToCart = () => {
@@ -19,3 +21,7 @@ export default class ProductView extends Component {
     );
   }
 }
+
+ProductView.propTypes = {
+  product: PropTypes.instanceOf(Product)
+};
