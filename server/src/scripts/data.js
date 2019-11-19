@@ -35,7 +35,8 @@ export const products = (() => {
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       images: [faker.image.image(1280, 720, false)],
-      categories: categories
+      categories: categories,
+      isFeatured: faker.random.boolean
     });
   }
   return productList;

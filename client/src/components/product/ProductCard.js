@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./ProductCard.css";
 import { SecondaryButton } from "../Button";
 import PropTypes from "prop-types";
+import FeaturedTag from "./FeaturedTag";
 
 export default class ProducrCard extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class ProducrCard extends Component {
           onMouseLeave={this.handleMouseLeave}
         />
         <h3>{this.props.name}</h3>
+        {this.props.isFeatured && <FeaturedTag/>}
         <p>{this.props.price}</p>
         {this.props.withRemoveButton && (
           <SecondaryButton onClick={this.props.onRemove}>
@@ -49,6 +51,7 @@ export default class ProducrCard extends Component {
 ProducrCard.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  isFeatured: PropTypes.bool.isRequired,
   images: PropTypes.arrayOf(PropTypes.string),
   withRemoveButton: PropTypes.bool,
   onRemove: PropTypes.func

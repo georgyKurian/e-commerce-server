@@ -6,7 +6,7 @@ test("It calls next()", () => {
   expect(next.mock.calls.length).toBe(1);
 });
 
-test("It adds isAuthenticated and isAdmin flages to req", () => {
+test("It adds user.data to req", () => {
   const next = jest.fn(x => x);
   const req = {};
   withAuthenticated(req, {}, next);
