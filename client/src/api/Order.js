@@ -42,7 +42,9 @@ export const placeOrder = async body => {
 
 export const getUserOrders = async () => {
   try {
-    const { data } = await axios.get("v1/orders");
+    const { data } = await axios.get("v1/orders", {
+      headers: await getAuthHeader()
+    });
     return data ? data.map(orderData => new Order(orderData)) : null;
   } catch (error) {
     console.error(error);

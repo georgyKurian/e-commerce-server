@@ -11,5 +11,5 @@ test("It adds isAuthenticated and isAdmin flages to req", () => {
   const req = {};
   withAuthenticated(req, {}, next);
   expect(typeof req.isAuthenticated === "boolean").toBe(true);
-  expect(typeof req.isAdmin === 'boolean').toBe(true);
+  expect(typeof req.isAdmin === "boolean").toBe(true);
 });

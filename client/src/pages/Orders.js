@@ -10,7 +10,7 @@ export default class Orders extends Component {
   };
 
   componentDidMount = async () => {
-    const orders = await getUserOrders();
+    const orders = await getUserOrders() || [];
     this.setState({
       orders,
       isLoading: false

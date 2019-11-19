@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import db from "./db/index";
+import "./db/index";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
 import withAdminPermission from "./middlewear/withAdminPermission";
