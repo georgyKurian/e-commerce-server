@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import helmet from "helmet";
 import cors from "cors";
 import "./db/index";
 import logger from "./middlewear/logger";
@@ -21,7 +22,8 @@ const corsOptions = {
 };
 
 // middlewears
-app.use(cors(process.env === "production" ? corsOptions : undefined));
+app.use(helmet());
+app.use(cors(process.env !== "production" ? undefined : corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(withAuthentication);
