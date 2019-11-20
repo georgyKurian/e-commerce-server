@@ -8,7 +8,7 @@ export default class NavigationBar extends Component {
   render() {
     const { isLoggedIn, isAdmin } = this.props;
     return (
-      <div className="NavigationBar">
+      <div className="NavigationBar m-3">
         <Link to="/">Home</Link>
         <Link to="/category/online">#online</Link>
         <Link to="/category/mobile">#mobile</Link>

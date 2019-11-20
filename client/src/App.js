@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./styles/tailwind.css";
 import Auth from "./pages/Auth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import store from "store2";
