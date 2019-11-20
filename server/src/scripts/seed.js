@@ -9,13 +9,28 @@ dotenv.config();
 db.on("error", console.error.bind(console, "connection error:"));
 
 db.once("open", function() {
-  console.log("Database connection is open!");
+  const promises = [];
+  promises.push(
+    UserModel.insertMany(users)
+      .then(() => {
+        console.log("Users data populated!");
+      })
+      .catch(e => {
+        console.error(e);
+      })
+  );
 
-  UserModel.insertMany(users);
-
-  ProductModel.insertMany(products, error => {
-    if (error) {
-      console.log(error);
-    }
+  promises.push(
+    ProductModel.insertMany(products)
+      .then(() => {
+        console.log("Products data populated!");
+      })
+      .catch(e => {
+        console.error(e);
+      })
+  );
+  Promise.all(promises).finally(() => {
+    console.log("Seeding completed!");
+    process.exit();
   });
 });

@@ -38,7 +38,7 @@ export default class Product {
   /**
    * @return {boolean}
    */
-  getIsFeatured = () => (this.this._isFeatured = isFeatured);
+  getIsFeatured = () => this._isFeatured;
 
   /**
    * @return {string[]}

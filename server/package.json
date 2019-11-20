@@ -12,7 +12,7 @@
     "test": "standard && jest",
     "db:create": "docker build . -t mongodb_dev",
     "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev",
-    "db:seed": "babel-node ./scripts/seed.js"
+    "db:seed": "babel-node src/scripts/seed.js"
   },
   "repository": {
     "type": "git",

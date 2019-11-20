@@ -14,7 +14,7 @@ export default class ProductView extends Component {
         <h2>{this.props.product.getName()}</h2>
         <p>{this.props.product.getFormattedPrice()}</p>
         <PrimaryButton onClick={this.addToCart}>Add to Cart</PrimaryButton>
-        {this.props.product.getImages().map(src => (
+        {this.props.product.getImages().map((src,index) => (
           <img src={src} key={src} alt="Product" />
         ))}
       </div>

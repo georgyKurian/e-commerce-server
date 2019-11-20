@@ -34,9 +34,13 @@ export const products = (() => {
     productList.push({
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
-      images: [faker.image.image(1280, 720, false)],
+      // faker.image.image(1280, 720, false)
+      images: [
+        `https://picsum.photos/id/${id * 2 - 1}/1280/720`,
+        `https://picsum.photos/id/${id * 2}/1280/720`
+      ],
       categories: categories,
-      isFeatured: faker.random.boolean
+      isFeatured: faker.random.number({ min: 0, max: 10 }) > 7
     });
   }
   return productList;
