@@ -28,7 +28,7 @@ export default class ProducrCard extends Component {
 
   render() {
     return (
-      <div className="ProductCard">
+      <div className="productCard">
         <img
           src={this.state.image}
           alt="Product"

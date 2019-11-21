@@ -8,9 +8,9 @@ import "./ProductList.css";
 export default class ProductList extends Component {
   render() {
     return (
-      <div className="ProductList">
+      <div className="productList flex flex-row items-ceter flex-wrap my-3">
         {this.props.products.map(product => (
-          <Link key={product.getId()} to={`/products/${product.getId()}`}>
+          <Link key={product.getId()} to={`/products/${product.getId()}`} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:p-2">
             <ProductCard
               name={product.getName()}
               images={product.getImages()}
