@@ -1,18 +1,41 @@
 import React from "react";
 
+const star = {
+  fill: "#FFB600",
+  stroke: "#a0a0a0",
+  strokeWidth:1,
+};
+
+const halfStar = { ...star, fill: "url('#halfGradient')"};
+const emptyStar = { ...star, fill: "none"};
+
 export default ({rating}) => {
-  let i = 2;
-  const num = rating *2;
+  const xCords = [0,36,72,108,144]
   const stars = [];
-  for (; i <= num && i <= 10; i += 2) {
-    stars.push(<svg version="1.1" height={"1rem"} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 53.867 53.867" style={{"enable-background":"new 0 0 53.867 53.867"}} xmlSpace="preserve"> <polygon style={{fill:"#EFCE4A"}} points="26.934,1.318 35.256,18.182 53.867,20.887 40.4,34.013 43.579,52.549 26.934,43.798 10.288,52.549 13.467,34.013 0,20.887 18.611,18.182 "/> </svg>);
+  let i = 0;
+  for (; i < 50; i+=10) {
+    let style = emptyStar;
+    if( (i+5)===rating){
+      style=halfStar;
+    }
+    else if(i<=rating){
+      style=star;
+    }
+    stars.push(<use key={(i/10)} xlinkHref="#icon-star" x={xCords[i/10]} y="0" style={style}/>);
   }
-  if (i !== 10 && num % 2 === 1) {
-    i += 2;
-    stars.push();
-  }
-  for (; i <= 10; i += 2) {
-    stars.push(<div>0</div>);
-  }
-  return <div className="flex">{stars}</div>;
+
+  return (<svg className="star-source" height="20" width="100" viewBox="40 0 95 36" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <g id="icon-star">
+      <path d="M20.388,10.918L32,12.118l-8.735,7.749L25.914,31.4l-9.893-6.088L6.127,31.4l2.695-11.533L0,12.118
+               l11.547-1.2L16.026,0.6L20.388,10.918z" />
+    </g>
+    <linearGradient id="halfGradient">
+      <stop stopOpacity="1" offset="50%" stopColor="#FFB600"></stop>
+      <stop stopOpacity="0" offset="50%"></stop>
+    </linearGradient>    
+  </defs>
+  {stars}
+</svg>
+)
 };

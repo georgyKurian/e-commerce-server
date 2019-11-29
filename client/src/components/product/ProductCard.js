@@ -42,7 +42,7 @@ export default class ProducrCard extends Component {
           </Link>
         </div>
         {this.props.isFeatured && <FeaturedTag />}
-        <Rating rating={3.5} />
+        <Rating rating={35} />
         <span className="text-orange-600 font-medium text-xl">
           {this.props.price}
         </span>

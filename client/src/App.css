@@ -1,6 +1,6 @@
 .App {
-  margin: 10rem auto;
-  padding: 2em;
+  margin: 0rem auto;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
