@@ -1,6 +1,6 @@
 import faker from "faker";
 
-export const products = (() => {
+export default (() => {
   const productList = [];
 
   for (let id = 1; id <= 30; id += 1) {

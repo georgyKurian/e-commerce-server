@@ -1,23 +1,32 @@
-import faker from "faker";
+import faker from "./Faker";
 
-export const Orders = ((productList,userList) => {
+export default (productList, userList) => {
   const orderList = [];
 
-  orderList.push({
-    username: "admin",
-    email: "admin@admin.com",
-    role: "admin"
-  });
-
   for (let id = 2; id <= 5; id += 1) {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
+    const fromDate = new Date();
+    const toDate = new Date(
+      new Date().setFullYear(new Date().getFullYear() - 1)
+    );
 
+    const user = faker.random.arrayElement(userList);
+    console.log(user);
     orderList.push({
-      username: faker.internet.userName(firstName, lastName),
-      email: faker.internet.email(firstName, lastName),
-      role: "customer"
+      customer: user._id,
+      timestamp: faker.date.between(fromDate, toDate).getTime(),
+      products: faker.custom.randomSubArray(productList),
+      contact: {
+        fullName: faker.fake("{{name.firstName}} {{name.lastName}}"),
+        phoneNumber: faker.phone.phoneNumber("###-###-####")
+      },
+      shippingAddress: {
+        country: faker.address.country(),
+        city: faker.address.city(),
+        addressLine1: faker.address.streetAddress(),
+        addressLine2: faker.address.secondaryAddress(),
+        postalCode: faker.address.zipCode()
+      }
     });
   }
   return orderList;
-})();
+};

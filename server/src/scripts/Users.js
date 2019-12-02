@@ -1,6 +1,6 @@
 import faker from "faker";
 
-export const users = (() => {
+export default (() => {
   const userList = [];
 
   userList.push({

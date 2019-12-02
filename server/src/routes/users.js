@@ -36,5 +36,5 @@ export default app => {
   app.delete("/v1/users/:id", (req, res) => {
     console.log(req.params.id);
     res.status(200).send();
-  });
+   });
 };
