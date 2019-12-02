@@ -28,7 +28,7 @@ export default app => {
         const orderData = {
           ...req.body,
           customer: req.user.data._id,
-          tomestamp: Date.now()
+          timestamp: Date.now()
         };
         const order = await OrderModel.create(orderData);
         if (order) {

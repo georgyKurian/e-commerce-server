@@ -599,6 +599,42 @@ video {
   height: auto;
 }
 
+body{
+  font-size: 16px;
+}
+
+/* Small (sm) */
+
+@media (min-width: 640px) {
+  body{
+    font-size: 17px;
+  }
+}
+
+/* Medium (md) */
+
+@media (min-width: 768px) {
+  body{
+    font-size: 18px;
+  }
+}
+
+/* Large (lg) */
+
+@media (min-width: 1024px) {
+  body{
+    font-size: 19px;
+  }
+}
+
+/* Extra Large (xl) */
+
+@media (min-width: 1280px) {
+  body{
+    font-size: 20px;
+  }
+}
+
 .container {
   width: 100%;
 }
