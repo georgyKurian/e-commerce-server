@@ -1,7 +1,10 @@
 import db from "../db/index";
-import { users, products } from "./data";
+import users from "./Users";
+import products from "./Products";
+import generateOrderData from "./Orders";
 import { ProductModel } from "../models/Product";
 import { UserModel } from "../models/User";
+import { OrderModel } from "../models/Order";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -29,8 +32,21 @@ db.once("open", function() {
         console.error(e);
       })
   );
-  Promise.all(promises).finally(() => {
-    console.log("Seeding completed!");
-    process.exit();
+
+  Promise.all(promises).finally(async () => {
+    const userList = await UserModel.find();
+    const productList = await ProductModel.find();
+    const orders = generateOrderData(userList, productList);
+    OrderModel.insertMany(orders)
+      .then(() => {
+        console.log("Order data populated!");
+        console.log("Seeding completed!");
+      })
+      .catch(e => {
+        console.error(e);
+      })
+      .finally(() => {
+        process.exit();
+      });
   });
 });
