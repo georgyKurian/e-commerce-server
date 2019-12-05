@@ -4,6 +4,10 @@ export const ReviewSchema = new Schema({
   order_id: Schema.Types.ObjectId,
   product_id: Schema.Types.ObjectId,
   comment: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   rating: {
     type: Number,
     min: 0,
