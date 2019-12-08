@@ -13,47 +13,53 @@ dotenv.config();
 
 db.on("error", console.error.bind(console, "connection error:"));
 
-db.once("open", function() {
+db.once("open", () => {
   const promises = [];
 
   promises.push(
-    UserModel.insertMany(users)
-      .then(userList => {
-        console.log("Users data populated!");
-        return userList;
-      })
-      .catch(e => { 
-        console.error(e);
-      })
+    UserModel.deleteMany().then(() => {
+      return UserModel.insertMany(users)
+        .then(userList => {
+          console.log("Users data populated!");
+          return userList;
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    })
   );
 
   promises.push(
-    ProductModel.insertMany(products)
-      .then(productList => {
-        console.log("Products data populated!");
-        return productList;
-      })
-      .catch(e => {
-        console.error(e);
-      })
+    ProductModel.deleteMany().then(() => {
+      return ProductModel.insertMany(products)
+        .then(productList => {
+          console.log("Products data populated!");
+          return productList;
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    })
   );
 
   Promise.all(promises).then(async ([userList, productList]) => {
     const orders = generateOrderData(userList, productList);
-    OrderModel.insertMany(orders)
-      .then(async orderList => {
-        console.log("Order data populated!");
-        const reviewList = generateReviewData(orderList);
-        await ReviewModel.insertMany(reviewList).then(() => {
-          console.log("Inserted reviews!");
-          console.log("Seeding completed!");
+    OrderModel.deleteMany().then(() => {
+      OrderModel.insertMany(orders)
+        .then(async orderList => {
+          console.log("Order data populated!" + orderList);
+          const reviewList = generateReviewData(orderList);
+          await ReviewModel.insertMany(reviewList).then(() => {
+            console.log("Inserted reviews!");
+            console.log("Seeding completed!");
+          });
+        })
+        .catch(e => {
+          console.error(e);
+        })
+        .finally(() => {
+          process.exit();
         });
-      })
-      .catch(e => {
-        console.error(e);
-      })
-      .finally(() => {
-        process.exit();
-      });
+    });
   });
 });
