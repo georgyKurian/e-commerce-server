@@ -14,6 +14,10 @@ export default (() => {
     const lastName = faker.name.lastName();
 
     userList.push({
+      name: {
+        first: faker.name.firstName(),
+        last: faker.name.lastName()
+      },
       username: faker.internet.userName(firstName, lastName),
       email: faker.internet.email(firstName, lastName),
       role: "customer"

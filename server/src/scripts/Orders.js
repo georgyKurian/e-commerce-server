@@ -12,7 +12,7 @@ export default (userList, productList) => {
     const user = faker.random.arrayElement(userList);
     orderList.push({
       customer: user._id,
-      timestamp: faker.date.between(fromDate, toDate).getTime(),
+      created_at: faker.date.between(fromDate, toDate).getTime(),
       products: faker.custom.randomSubArray(productList, true, 5),
       contact: {
         fullName: faker.fake("{{name.firstName}} {{name.lastName}}"),

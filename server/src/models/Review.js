@@ -1,13 +1,21 @@
-import { Schema, Model } from "mongose";
+import mongoose, { Schema } from "mongoose";
 
 export const ReviewSchema = new Schema({
-  order_id: Schema.Types.ObjectId,
-  product_id: Schema.Types.ObjectId,
+  title: String,
   comment: String,
+  order: {
+    type: Schema.Types.ObjectId,
+    ref: "Order"
+  },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: "Product"
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User"
   },
+  created_at: String,
   rating: {
     type: Number,
     min: 0,
@@ -21,4 +29,4 @@ export const ReviewSchema = new Schema({
   }
 });
 
-export const ReviewModel = new Model("Review", ReviewSchema);
+export const ReviewModel = mongoose.model("Review", ReviewSchema);

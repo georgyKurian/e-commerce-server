@@ -2,10 +2,12 @@ import db from "../db/index";
 import users from "./Users";
 import products from "./Products";
 import generateOrderData from "./Orders";
+import generateReviewData from "./Reviews";
 import { ProductModel } from "../models/Product";
 import { UserModel } from "../models/User";
 import { OrderModel } from "../models/Order";
 import dotenv from "dotenv";
+import { ReviewModel } from "../models/Review";
 
 dotenv.config();
 
@@ -13,34 +15,39 @@ db.on("error", console.error.bind(console, "connection error:"));
 
 db.once("open", function() {
   const promises = [];
+
   promises.push(
     UserModel.insertMany(users)
-      .then(() => {
+      .then(userList => {
         console.log("Users data populated!");
+        return userList;
       })
-      .catch(e => {
+      .catch(e => { 
         console.error(e);
       })
   );
 
   promises.push(
     ProductModel.insertMany(products)
-      .then(() => {
+      .then(productList => {
         console.log("Products data populated!");
+        return productList;
       })
       .catch(e => {
         console.error(e);
       })
   );
 
-  Promise.all(promises).finally(async () => {
-    const userList = await UserModel.find();
-    const productList = await ProductModel.find();
+  Promise.all(promises).then(async ([userList, productList]) => {
     const orders = generateOrderData(userList, productList);
     OrderModel.insertMany(orders)
-      .then(() => {
+      .then(async orderList => {
         console.log("Order data populated!");
-        console.log("Seeding completed!");
+        const reviewList = generateReviewData(orderList);
+        await ReviewModel.insertMany(reviewList).then(() => {
+          console.log("Inserted reviews!");
+          console.log("Seeding completed!");
+        });
       })
       .catch(e => {
         console.error(e);
