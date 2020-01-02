@@ -4,6 +4,7 @@ export default orderList => {
   const reviews = [];
   orderList.forEach(order => {
     order.products.forEach(product => {
+      console.log(order.created_at + "\n");
       reviews.push({
         title: faker.lorem.sentences(),
         comment: faker.lorem.paragraph(),
@@ -12,7 +13,7 @@ export default orderList => {
         product: product._id,
         rating: faker.random.number({ min: 0, max: 10 }) * 5,
         created_at: faker.date
-          .between(new Date(product.created_at), new Date())
+          .between(new Date(Number(order.created_at)), new Date())
           .getTime()
       });
     });

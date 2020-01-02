@@ -42,12 +42,22 @@ db.once("open", () => {
     })
   );
 
+  promises.push(
+    ReviewModel.deleteMany()
+      .then(() => {
+        console.log("Reviews data deleted!");
+      })
+      .catch(e => {
+        console.error(e);
+      })
+  );
+
   Promise.all(promises).then(async ([userList, productList]) => {
     const orders = generateOrderData(userList, productList);
     OrderModel.deleteMany().then(() => {
       OrderModel.insertMany(orders)
         .then(async orderList => {
-          console.log("Order data populated!" + orderList);
+          console.log("Order data populated!");
           const reviewList = generateReviewData(orderList);
           await ReviewModel.insertMany(reviewList).then(() => {
             console.log("Inserted reviews!");

@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 export const OrderSchema = new Schema({
   customer: Schema.Types.ObjectId,
-  timestamp: String,
+  created_at: String,
   products: [
     {
       _id: Schema.Types.ObjectId,
