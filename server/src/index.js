@@ -8,6 +8,7 @@ import withAuthentication from "./middlewear/withAuthentication";
 import withAdminPermission from "./middlewear/withAdminPermission";
 import dotenv from "dotenv";
 import getProductsRoutes from "./routes/products";
+import getReviewRoutes from "./routes/reviews";
 import getUserRoutes from "./routes/users";
 import getAuthRoutes from "./routes/auth";
 import getOrderRoutes from "./routes/orders";
@@ -35,6 +36,7 @@ getProductsRoutes(app);
 getUserRoutes(app);
 getAuthRoutes(app);
 getOrderRoutes(app);
+getReviewRoutes(app);
 
 // Catches 404
 app.use(function(req, res, next) {

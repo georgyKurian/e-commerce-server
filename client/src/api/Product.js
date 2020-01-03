@@ -13,12 +13,12 @@ export const getProducts = async categories => {
 };
 
 export const getProduct = async id => {
-  try {
-    const { data } = await axios.get(
-      `v1/products${id ? `/${id}` : ""}`
-    );
-    return new Product(data);
-  } catch (error) {
-    console.error(error);
-  }
+  return axios
+    .get(`v1/products${id ? `/${id}` : ""}`)
+    .then(({ data }) => {
+      return new Product(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 };
