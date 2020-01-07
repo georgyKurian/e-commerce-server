@@ -8,6 +8,7 @@ export default class ImageCarousel extends Component {
     var settings = {
       autoPlay: true,
       autoplaySpeed: 3000,
+      showStatus: false,
       className: this.props.className,
       dots: true,
       infiniteLoop: true,
