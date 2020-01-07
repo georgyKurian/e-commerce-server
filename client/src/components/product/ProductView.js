@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PrimaryButton } from "../Button";
 import PropTypes from "prop-types";
 import Product from "../../models/Product";
+import ImageCarosule from "../../components/product/Carousel";
 
 export default class ProductView extends Component {
   addToCart = () => {
@@ -10,13 +11,16 @@ export default class ProductView extends Component {
 
   render() {
     return (
-      <div className="ProductVIew">
-        <h2>{this.props.product.getName()}</h2>
-        <p>{this.props.product.getFormattedPrice()}</p>
-        <PrimaryButton onClick={this.addToCart}>Add to Cart</PrimaryButton>
-        {this.props.product.getImages().map((src,index) => (
-          <img src={src} key={src} alt="Product" />
-        ))}
+      <div className="ProductView flex flex-wrap py-2 ">
+        <ImageCarosule
+          images={this.props.product.getImages()}
+          className="md:w-1/2 md:px-2"
+        />
+        <div className="md:w-1/2 md:px-2">
+          <h2>{this.props.product.getName()}</h2>
+          <p>{this.props.product.getFormattedPrice()}</p>
+          <PrimaryButton onClick={this.addToCart}>Add to Cart</PrimaryButton>
+        </div>
       </div>
     );
   }

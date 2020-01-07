@@ -1,4 +1,5 @@
 import { ProductModel } from "../models/Product";
+import { ReviewModel } from "../models/Review";
 
 export default app => {
   app.get("/v1/products", async (req, res) => {
@@ -11,6 +12,23 @@ export default app => {
           ? { categories: { $in: categoryList } }
           : undefined
       )) || [];
+
+    products.map(product => {
+      ReviewModel.aggregate([
+        { $match: { product: product._id } },
+        {
+          $group: {
+            _id: "$product",
+            rating: { $avg: "$rating" },
+            count: { $sum: 1 }
+          }
+        }
+      ]).exec((err, reviews) => {
+        if (err) throw err;
+        console.log(reviews);
+      });
+    });
+
     res.send(products);
   });
 
