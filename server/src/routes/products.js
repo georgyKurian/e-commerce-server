@@ -5,31 +5,37 @@ export default app => {
   app.get("/v1/products", async (req, res) => {
     const { categories } = req.query;
     const categoryList = categories ? categories.split(",") : [];
+    const productList = [];
 
-    const products =
-      (await ProductModel.find(
+   
+      ProductModel.find(
         categoryList.length > 0
           ? { categories: { $in: categoryList } }
-          : undefined
-      )) || [];
-
-    products.map(product => {
-      ReviewModel.aggregate([
-        { $match: { product: product._id } },
-        {
-          $group: {
-            _id: "$product",
-            rating: { $avg: "$rating" },
-            count: { $sum: 1 }
+          : undefined,
+        , function (err, products) {
+            products.map(async product => {
+              ReviewModel.aggregate([
+                { $match: { product: product._id } },
+                {
+                  $group: {
+                    _id: "$product",
+                    rating: { $avg: "$rating" },
+                    count: { $sum: 1 }
+                  }
+                }
+              ]).exec((err, reviews) => {
+                if (err) throw err;
+                product.avgRating = reviews.rating;
+                product.reviewCount = reviews.count;
+                productList.push(product);
+              });
+            });        
           }
-        }
-      ]).exec((err, reviews) => {
-        if (err) throw err;
-        console.log(reviews);
-      });
-    });
+      );
 
-    res.send(products);
+    
+    console.log(productList);
+    res.send(productList);
   });
 
   app.get("/v1/products/:id", async (req, res) => {
