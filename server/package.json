@@ -35,7 +35,8 @@
     "express-jwt": "^5.3.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.1",
+    "response-time": "^2.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

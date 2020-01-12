@@ -7,35 +7,41 @@ export default app => {
     const categoryList = categories ? categories.split(",") : [];
     const productList = [];
 
-   
-      ProductModel.find(
-        categoryList.length > 0
-          ? { categories: { $in: categoryList } }
-          : undefined,
-        , function (err, products) {
-            products.map(async product => {
-              ReviewModel.aggregate([
-                { $match: { product: product._id } },
-                {
-                  $group: {
-                    _id: "$product",
-                    rating: { $avg: "$rating" },
-                    count: { $sum: 1 }
-                  }
+    await ProductModel.find(
+      categoryList.length > 0
+        ? { categories: { $in: categoryList } }
+        : undefined,
+      function(err, products) {
+        if (err) throw err;
+        Promise.all(
+          products.map(async product => {
+            return ReviewModel.aggregate([
+              { $match: { product: product._id } },
+              {
+                $group: {
+                  _id: "$product",
+                  rating: { $avg: "$rating" },
+                  count: { $sum: 1 }
                 }
-              ]).exec((err, reviews) => {
-                if (err) throw err;
-                product.avgRating = reviews.rating;
-                product.reviewCount = reviews.count;
-                productList.push(product);
-              });
-            });        
-          }
-      );
-
-    
-    console.log(productList);
-    res.send(productList);
+              }
+            ]).then(reviews => {
+              const json = product.toJSON();
+              if (reviews[0] !== undefined) {
+                json.avgRating = reviews[0].rating;
+                json.reviewCount = reviews[0].count;
+              }
+              productList.push(json);
+            });
+          })
+        )
+          .then(() => {
+            res.send(productList);
+          })
+          .catch(err => {
+            console.error(err); 
+          });
+      }
+    );
   });
 
   app.get("/v1/products/:id", async (req, res) => {

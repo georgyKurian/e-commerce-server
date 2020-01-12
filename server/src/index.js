@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import "./db/index";
+import responseTime from "response-time";
 import logger from "./middlewear/logger";
 import withAuthentication from "./middlewear/withAuthentication";
 import withAdminPermission from "./middlewear/withAdminPermission";
@@ -23,6 +24,11 @@ const corsOptions = {
 };
 
 // middlewears
+app.use(
+  responseTime(function(req, res, time) {
+    console.log("=> ", req.method, req.originalUrl, " || ", time, " ms");
+  })
+);
 app.use(helmet());
 app.use(cors(process.env !== "production" ? undefined : corsOptions));
 app.use(bodyParser.json());
