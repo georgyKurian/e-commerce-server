@@ -1,0 +1,11 @@
+.NavigationBar {
+  @apply bg-gray-900;
+}
+
+.NavigationBar a{
+  @apply bg-gray-900;
+}
+
+.NavigationBar a:hover{
+  @apply bg-gray-500;
+}

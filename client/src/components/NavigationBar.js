@@ -2,13 +2,12 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
-import "./NavigationBar.css";
 
 export default class NavigationBar extends Component {
   render() {
     const { isLoggedIn, isAdmin } = this.props;
     return (
-      <div className="NavigationBar m-3">
+      <div className="NavigationBar flex justify-around">
         <Link to="/">Home</Link>
         <Link to="/category/online">#online</Link>
         <Link to="/category/mobile">#mobile</Link>
