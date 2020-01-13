@@ -42,7 +42,7 @@ export default class ProducrCard extends Component {
           </Link>
         </div>
         {this.props.isFeatured && <FeaturedTag />}
-        <Rating rating={35} />
+        <Rating rating={this.props.avgRating} />
         <span className="text-orange-600 font-medium text-xl">
           {this.props.price}
         </span>
@@ -64,6 +64,8 @@ ProducrCard.propTypes = {
   price: PropTypes.string.isRequired,
   isFeatured: PropTypes.bool.isRequired,
   images: PropTypes.arrayOf(PropTypes.string),
+  avgRating: PropTypes.string.isRequired,
+  reviewCount: PropTypes.string.isRequired,
   withRemoveButton: PropTypes.bool,
   onRemove: PropTypes.func
 };

@@ -9,13 +9,19 @@ export default class ProductList extends Component {
     return (
       <div className="flex flex-row items-ceter flex-wrap my-3">
         {this.props.products.map(product => (
-          <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:p-2"  key={product.getId()}>
+          <div
+            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:p-2"
+            key={product.getId()}
+          >
             <ProductCard
+            key={product.getId()}
               id={product.getId()}
               name={product.getName()}
               images={product.getImages()}
               price={product.getFormattedPrice()}
               isFeatured={product.getIsFeatured()}
+              avgRating={product.getAvgRating()}
+              reviewCount={product.getReviewCount()}
             />
           </div>
         ))}
