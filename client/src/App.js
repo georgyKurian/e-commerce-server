@@ -92,39 +92,41 @@ class App extends Component {
               isAdmin={isAdmin}
             ></NavigationBar>
           </header>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/auth/:token" exact component={Auth(this.authUser)} />
-            <Route path="/forms" exact component={FormDemo} />
-            <Route
-              path="/cart"
-              exact
-              render={props => (
-                <Cart
-                  {...props}
-                  items={this.state.itemsInCart}
-                  removeFromCart={this.removeFromCart}
-                  emptyCart={this.emptyCart}
+          <div className="xl:w-3/4 mx-auto">
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/auth/:token" exact component={Auth(this.authUser)} />
+              <Route path="/forms" exact component={FormDemo} />
+              <Route
+                path="/cart"
+                exact
+                render={props => (
+                  <Cart
+                    {...props}
+                    items={this.state.itemsInCart}
+                    removeFromCart={this.removeFromCart}
+                    emptyCart={this.emptyCart}
+                  />
+                )}
+              />
+              <Route path="/orders" exact component={Orders} />
+              <Route path="/account" exact component={Account} />
+              <Route path="/logout" exact component={Logout(this.logoutUser)} />
+              {isAdmin && (
+                <Route path="/admin/users" exact component={UserManagement} />
+              )}
+              {isAdmin && (
+                <Route
+                  path="/admin/products"
+                  exact
+                  component={ProductManagement}
                 />
               )}
-            />
-            <Route path="/orders" exact component={Orders} />
-            <Route path="/account" exact component={Account} />
-            <Route path="/logout" exact component={Logout(this.logoutUser)} />
-            {isAdmin && (
-              <Route path="/admin/users" exact component={UserManagement} />
-            )}
-            {isAdmin && (
-              <Route
-                path="/admin/products"
-                exact
-                component={ProductManagement}
-              />
-            )}
-            <Route path="/category/:slug" exact component={Category} />
-            <Route path="/products/:id" exact component={this.ProductPage} />
-            <Route component={NotFound} />
-          </Switch>
+              <Route path="/category/:slug" exact component={Category} />
+              <Route path="/products/:id" exact component={this.ProductPage} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
         </div>
       </Router>
     );

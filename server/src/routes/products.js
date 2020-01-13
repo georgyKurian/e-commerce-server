@@ -29,6 +29,9 @@ export default app => {
               if (reviews[0] !== undefined) {
                 json.avgRating = reviews[0].rating;
                 json.reviewCount = reviews[0].count;
+              } else {
+                json.avgRating = 0;
+                json.reviewCount = 0;
               }
               productList.push(json);
             });
@@ -38,7 +41,7 @@ export default app => {
             res.send(productList);
           })
           .catch(err => {
-            console.error(err); 
+            console.error(err);
           });
       }
     );
