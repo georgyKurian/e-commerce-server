@@ -1,6 +1,7 @@
 import MyLayout from "../components/Layouts/MyLayout";
 import React from "react";
 import fetch from "isomorphic-unfetch";
+import "../styles/main.css";
 
 class Index extends React.Component {
   static async getInitialProps(ctx) {

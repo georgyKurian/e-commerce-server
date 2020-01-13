@@ -5,7 +5,7 @@ const linkStyle = {
 };
 
 const Header = () => (
-  <div>
+  <div class="NavigationBar bg-gray-900">
     <Link href="/">
       <a style={linkStyle}>Home</a>
     </Link>

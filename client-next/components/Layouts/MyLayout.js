@@ -8,7 +8,7 @@ const linkStyle = {
 const MyLayout = (props) => (
   <div>
     <Header />
-    <div class="content">{props.children}</div>
+    <div className="content">{props.children}</div>
     <Footer />
   </div>
 );
