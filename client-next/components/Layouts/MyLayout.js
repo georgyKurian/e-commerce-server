@@ -8,7 +8,7 @@ const linkStyle = {
 const MyLayout = (props) => (
   <div>
     <Header />
-    <div className="content">{props.children}</div>
+    <div className="content inner-wrap mt-32">{props.children}</div>
     <Footer />
   </div>
 );

@@ -1,0 +1,15 @@
+.inner-wrap {
+  @apply w-10/12 mx-auto;
+}
+
+@screen md {
+}
+
+@screen lg {
+  .inner-wrap {
+    width: 1070px;
+  }
+}
+
+@screen xl {
+}

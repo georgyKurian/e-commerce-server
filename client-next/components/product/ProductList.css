@@ -1,0 +1,5 @@
+.ProductList {
+  display: flex;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
