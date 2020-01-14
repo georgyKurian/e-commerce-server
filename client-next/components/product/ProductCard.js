@@ -30,8 +30,11 @@ export default class ProducrCard extends Component {
 
   render() {
     return (
-      <div className="flex flex-col flex-wrap">
-        <div className="rounded overflow-hidden h-48">
+      <div
+        className="flex flex-col relative flex-wrap justify-between rounded bg-themeGray-200 p-2"
+        style={{ height: "22rem" }}
+      >
+        <div className="rounded overflow-hidden h-36">
           <Link href={`/products/${this.props.id}`}>
             <a>
               <img
@@ -54,12 +57,14 @@ export default class ProducrCard extends Component {
         <Link href={`/products/${this.props.id}`}>
           <a className="text-blue-700">{this.props.name}</a>
         </Link>
-        <SecondaryButton className="w-3/4 mx-auto self-end">
-          View Details
-        </SecondaryButton>
-        <PrimaryButton className="w-3/4 mx-auto self-end m-1">
-          Add to Bag
-        </PrimaryButton>
+        <div class="w-full text-center self-end">
+          <SecondaryButton className="w-3/4 mx-auto self-end">
+            View Details
+          </SecondaryButton>
+          <PrimaryButton className="w-3/4 mx-auto self-end m-1">
+            Add to Bag
+          </PrimaryButton>
+        </div>
 
         {this.props.withRemoveButton && (
           <SecondaryButton onClick={this.props.onRemove}>

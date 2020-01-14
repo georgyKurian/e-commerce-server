@@ -6,7 +6,7 @@ const isLoggedIn = false;
 const cssClasses = "flex-1 text-center py-4 text-sm text-themeGray-300 hover:text-white";
 
 const Header = () => (
-  <header className="fixed top-0 w-full bg-themeGray-700">
+  <header className="fixed top-0 w-full bg-themeGray-700 z-10">
     <nav className="NavigationBar inner-wrap flex justify-around text-white">
       <Link href="/">
         <a className={cssClasses}>Home</a>
