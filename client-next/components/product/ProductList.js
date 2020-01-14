@@ -6,7 +6,6 @@ import "./ProductList.css";
 
 export default class ProductList extends Component {
   render() {
-    console.log(this.props.products[0]);
     return (
       <div className="flex flex-row items-ceter flex-wrap my-3">
         {this.props.products.map(product => (

@@ -11,8 +11,8 @@ const Header = () => (
       <Link href="/">
         <a className={cssClasses}>Home</a>
       </Link>
-      <Link href="/category/online">
-        <a className={cssClasses}>#online</a>
+      <Link href="/shop">
+        <a className={cssClasses}>Shop</a>
       </Link>
       <Link href="/category/mobile">
         <a className={cssClasses}>#mobile</a>

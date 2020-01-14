@@ -35,7 +35,7 @@ export default class ProducrCard extends Component {
         style={{ height: "22rem" }}
       >
         <div className="rounded overflow-hidden h-36">
-          <Link href={`/products/${this.props.id}`}>
+          <Link href="/products/[id]" as={`/products/${this.props.id}`}>
             <a>
               <img
                 src={this.state.image}
@@ -54,10 +54,10 @@ export default class ProducrCard extends Component {
         <span className="text-orange-600 font-medium text-xl">
           {this.props.price}
         </span>
-        <Link href={`/products/${this.props.id}`}>
+        <Link href="/products/[id]" as={`/products/${this.props.id}`}>
           <a className="text-blue-700">{this.props.name}</a>
         </Link>
-        <div class="w-full text-center self-end">
+        <div className="w-full text-center self-end">
           <SecondaryButton className="w-3/4 mx-auto self-end">
             View Details
           </SecondaryButton>
