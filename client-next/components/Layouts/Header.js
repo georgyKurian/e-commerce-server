@@ -43,7 +43,7 @@ const Header = () => (
           </Link>
         </Fragment>
       ) : (
-        <Link href="/account">
+        <Link href="/login">
           <a className={cssClasses}>Login</a>
         </Link>
       )}

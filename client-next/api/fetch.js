@@ -16,3 +16,10 @@ export default (url, options) => {
       console.log(err);
     });
 };
+
+export const getResponse = (url, options) => {
+  console.log(baseURL + url);
+  return fetch(baseURL + url, { ...defaultOption, ...options }).catch(err => {
+    console.log(err);
+  });
+};
