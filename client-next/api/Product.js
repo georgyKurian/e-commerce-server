@@ -1,5 +1,4 @@
 import fetch from "./fetch";
-import Product from "../models/Product";
 
 export const getProducts = async categories => {
   return fetch(`/v1/products${categories ? `?categories=${categories}` : ""}`, {

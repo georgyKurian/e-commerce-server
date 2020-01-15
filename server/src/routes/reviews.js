@@ -2,22 +2,9 @@ import { ReviewModel } from "../models/Review";
 
 export default app => {
   app.get("/v1/reviews", async (req, res) => {
-    // To implement
-    /* const { categories } = req.query;
-    const categoryList = categories ? categories.split(",") : [];
-
-    const products =
-      (await ProductModel.find(
-        categoryList.length > 0
-          ? { categories: { $in: categoryList } }
-          : undefined
-      )) || [];
-    res.send(products); */
-  });
-
-  app.get("/v1/reviews/:productId", async (req, res) => {
     try {
-      const reviews = await ReviewModel.find({ product: req.params.productId });
+      const productId = req.query.productId;
+      const reviews = await ReviewModel.find({ product: productId });
       if (reviews) {
         res.send(reviews);
       } else {
