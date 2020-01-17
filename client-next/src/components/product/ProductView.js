@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PrimaryButton } from "../Button";
 import PropTypes from "prop-types";
-import Product from "../../models/Product";
+import Product from "../../src/models/Product";
 import ImageCarosule from "../../components/product/Carousel";
 
 export default class ProductView extends Component {

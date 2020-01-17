@@ -1,7 +1,7 @@
 import MyLayout from "../components/Layouts/MyLayout";
 import React from "react";
 import { getProducts } from "../api/Product";
-import "../styles/main.css";
+import "../../styles/main.css";
 import ProductList from "../components/product/ProductList";
 import Product from "../models/Product";
 

@@ -12,13 +12,11 @@ export default class Auth extends Component {
   }
 
   componentDidMount = async () => {
-    console.log("Mount");
-
     if (this.props.token) {
       await store.set("authToken", this.props.token);
       const data = await getCurrentUser();
     }
-    Router.replace('..//index');
+    Router.replace('//index');
   };
 
   render() {

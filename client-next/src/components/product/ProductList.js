@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProductCard from "./ProductCard";
 import PropTypes from "prop-types";
-import Product from "../../models/Product";
+import Product from "../../src/models/Product";
 import "./ProductList.css";
 
 export default class ProductList extends Component {
