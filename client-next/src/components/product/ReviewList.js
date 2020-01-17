@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Review from "../../src/models/Review";
+import Review from "../../models/Review";
 import ReviewView from "../../components/product/ReviewView";
 import PropTypes from "prop-types";
 

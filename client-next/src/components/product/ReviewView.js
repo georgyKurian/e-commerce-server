@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Review from "../../src/models/Review";
+import Review from "../../models/Review";
 import PropTypes from "prop-types";
 import Rating from "./Rating";
 
