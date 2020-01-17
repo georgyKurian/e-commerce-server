@@ -1,9 +1,12 @@
 import fetch from "./fetch";
 import getAuthHeader from "./getAuthHeader";
 
-export const getCurrentUser = async () => {
-  return fetch(`/v1/auth/`, { method: "POST", headers: await getAuthHeader() });
-/*   try {
+export const getCurrentUser = async (token = null) => {
+  return fetch(`/v1/auth/`, {
+    method: "POST",
+    headers: await getAuthHeader(token)
+  });
+  /*   try {
     const { data } = await axios.post(
       `v1/auth/`,
       {},

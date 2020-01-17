@@ -13,15 +13,12 @@ export default class Auth extends Component {
 
   componentDidMount = async () => {
     console.log("Mount");
-    /* debugger;
-    this;
+
     if (this.props.token) {
-      await store.set("authToken", this.props.match.params.token);
-      await this.props.authUser();
+      await store.set("authToken", this.props.token);
       const data = await getCurrentUser();
-      console.log(data);
-    } */
-    Router.push("/");
+    }
+    Router.replace('..//index');
   };
 
   render() {

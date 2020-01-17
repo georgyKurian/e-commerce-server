@@ -34,6 +34,17 @@
       "outFiles": [
         "${workspaceRoot}/server/dist/**.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Next.js",
+      "cwd": "${workspaceFolder}/client-next",
+      "runtimeExecutable": "${workspaceFolder}\\client-next\\node_modules\\.bin\\next",
+      "port": 9229,
+      "env": {
+        "NODE_OPTIONS": "--inspect"
+      }
     }
   ]
 }
