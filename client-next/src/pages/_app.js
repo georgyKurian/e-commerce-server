@@ -1,9 +1,13 @@
 import React from "react";
 import App from "next/app";
-import Link from "next/link";
+import { createStore } from "redux";
 import NProgress from "nprogress";
 import Router from "next/router";
 import Head from "next/head";
+import eCommerceApp from "../redux/reducers/index";
+import { Provider } from "react-redux";
+
+const store = createStore(eCommerceApp);
 
 Router.events.on("routeChangeStart", url => {
   console.log(`Loading: ${url}`);
@@ -20,8 +24,10 @@ export default class MyApp extends App {
         <Head>
           {/* Import CSS for nprogress */}
           <link rel="stylesheet" type="text/css" href="/nprogress.css" />
-        </Head>        
-        <Component {...pageProps} />
+        </Head>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </React.Fragment>
     );
   }
