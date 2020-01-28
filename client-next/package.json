@@ -1,7 +1,8 @@
 {
   "name": "client-next",
-  "version": "1.0.0",
-  "description": "",
+  "node": "12.x",
+  "version": "0.0.1",
+  "description": "Next.js front end for the e-commerce site",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -9,7 +10,7 @@
     "start": "next start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Georgi Kurian",
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.2",

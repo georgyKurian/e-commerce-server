@@ -1,5 +1,6 @@
 {
   "name": "e-commerce-server",
+  "node": "12.x",
   "version": "0.0.1",
   "description": "API Server for the e-commerce site",
   "main": "dist/index.js",
@@ -21,7 +22,7 @@
   "keywords": [
     "e-commerce"
   ],
-  "author": "Georgy",
+  "author": "Georgi Kurian",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/georgyKurian/e-commerce/issues"
