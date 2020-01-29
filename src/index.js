@@ -17,7 +17,7 @@ import getOrderRoutes from "./routes/orders";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT; // process.env.PORT
+const port = process.env.PORT || 8085; // process.env.PORT
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
   optionsSuccessStatus: 200

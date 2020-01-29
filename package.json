@@ -8,7 +8,7 @@
     "debug-build": "babel src -d dist --source-maps",
     "debug": "nodemon --exec babel-node src/index.js",
     "build": "babel src -d dist",
-    "start": "node dist/index.js",
+    "start": "node dist/index.js -p $PORT",
     "test": "standard && jest",
     "db:create": "docker build . -t mongodb_dev",
     "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev",
