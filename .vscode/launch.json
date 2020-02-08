@@ -5,22 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Client Chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client/src",
-      "cwd": "${workspaceFolder}/client",
-    },
-    {
       "type": "node",
       "request": "launch",
       "name": "Server - nodemon",
-      "cwd": "${workspaceFolder}/server",
-      "program": "${workspaceFolder}/server/src/index.js",
+      "program": "${workspaceFolder}/src/index.js",
       "stopOnEntry": false,
       "args": [],
-      "preLaunchTask": "npm: debug-build - server",
+      "preLaunchTask": "npm: debug-build",
       "runtimeExecutable": null,
       "runtimeArgs": [
         "--nolazy"
@@ -32,19 +23,8 @@
       "sourceMaps": true,
       "trace": true,
       "outFiles": [
-        "${workspaceRoot}/server/dist/**.js"
+        "${workspaceRoot}/dist/**.js"
       ]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Next.js",
-      "cwd": "${workspaceFolder}/client-next",
-      "runtimeExecutable": "${workspaceFolder}\\client-next\\node_modules\\.bin\\next",
-      "port": 9229,
-      "env": {
-        "NODE_OPTIONS": "--inspect"
-      }
     }
   ]
 }
