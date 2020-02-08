@@ -1,12 +1,12 @@
-import faker from "faker";
+import faker from 'faker';
 
 export default (() => {
   const userList = [];
 
   userList.push({
-    username: "admin",
-    email: "admin@admin.com",
-    role: "admin"
+    username: 'admin',
+    email: 'admin@admin.com',
+    role: 'admin',
   });
 
   for (let id = 2; id <= 5; id += 1) {
@@ -16,11 +16,11 @@ export default (() => {
     userList.push({
       name: {
         first: faker.name.firstName(),
-        last: faker.name.lastName()
+        last: faker.name.lastName(),
       },
       username: faker.internet.userName(firstName, lastName),
       email: faker.internet.email(firstName, lastName),
-      role: "customer"
+      role: 'customer',
     });
   }
   return userList;

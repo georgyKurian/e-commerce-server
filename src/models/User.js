@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
   name: {
     first: String,
-    last: String
+    last: String,
   },
   email: String,
   username: String,
-  role: String
+  role: String,
 });
 
-export const UserModel = mongoose.model("User", UserSchema);
+export const UserModel = mongoose.model('User', UserSchema);

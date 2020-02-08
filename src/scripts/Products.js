@@ -1,4 +1,4 @@
-import faker from "faker";
+import faker from 'faker';
 
 export default (() => {
   const productList = [];
@@ -15,10 +15,10 @@ export default (() => {
       // faker.image.image(1280, 720, false)
       images: [
         `https://picsum.photos/id/${id * 2 - 1}/1280/720`,
-        `https://picsum.photos/id/${id * 2}/1280/720`
+        `https://picsum.photos/id/${id * 2}/1280/720`,
       ],
-      categories: categories,
-      isFeatured: faker.random.number({ min: 0, max: 10 }) > 7
+      categories,
+      isFeatured: faker.random.number({ min: 0, max: 10 }) > 7,
     });
   }
   return productList;

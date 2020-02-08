@@ -1,9 +1,3 @@
 {
-  "eslint.workingDirectories": [
-    {
-      "directory": "./server",
-      "changeProcessCWD": true
-    }
-  ],
   "eslint.alwaysShowStatus": true
 }

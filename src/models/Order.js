@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 export const OrderSchema = new Schema({
   customer: Schema.Types.ObjectId,
@@ -9,20 +9,20 @@ export const OrderSchema = new Schema({
       name: String,
       price: Number,
       images: [String],
-      categories: [String]
-    }
+      categories: [String],
+    },
   ],
   contact: {
     fullName: String,
-    phoneNumber: String
+    phoneNumber: String,
   },
   shippingAddress: {
     country: String,
     city: String,
     addressLine1: String,
     addressLine2: String,
-    postalCode: String
-  }
+    postalCode: String,
+  },
 });
 
-export const OrderModel = mongoose.model("Order", OrderSchema);
+export const OrderModel = mongoose.model('Order', OrderSchema);

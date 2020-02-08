@@ -1,19 +1,19 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 export const ReviewSchema = new Schema({
   title: String,
   comment: String,
   order: {
     type: Schema.Types.ObjectId,
-    ref: "Order"
+    ref: 'Order',
   },
   product: {
     type: Schema.Types.ObjectId,
-    ref: "Product"
+    ref: 'Product',
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User',
   },
   created_at: String,
   rating: {
@@ -21,12 +21,12 @@ export const ReviewSchema = new Schema({
     min: 0,
     max: 50,
     validate: {
-      validator: function(v) {
+      validator(v) {
         return v % 5 === 0;
       },
-      message: props => `${props.value} is not a valid rating`
-    }
-  }
+      message: (props) => `${props.value} is not a valid rating`,
+    },
+  },
 });
 
-export const ReviewModel = mongoose.model("Review", ReviewSchema);
+export const ReviewModel = mongoose.model('Review', ReviewSchema);

@@ -1,15 +1,15 @@
-import withAuthenticated from "../withAuthentication";
+import withAuthenticated from '../withAuthentication';
 
-test("It calls next()", () => {
-  const next = jest.fn(x => x);
+test('It calls next()', () => {
+  const next = jest.fn((x) => x);
   withAuthenticated({}, {}, next);
   expect(next.mock.calls.length).toBe(1);
 });
 
-test("It adds user.data to req", () => {
-  const next = jest.fn(x => x);
+test('It adds user.data to req', () => {
+  const next = jest.fn((x) => x);
   const req = {};
   withAuthenticated(req, {}, next);
-  expect(typeof req.isAuthenticated === "boolean").toBe(true);
-  expect(typeof req.isAdmin === "boolean").toBe(true);
+  expect(typeof req.isAuthenticated === 'boolean').toBe(true);
+  expect(typeof req.isAdmin === 'boolean').toBe(true);
 });

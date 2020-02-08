@@ -1,9 +1,9 @@
-import { ReviewModel } from "../models/Review";
+import { ReviewModel } from '../models/Review';
 
-export default app => {
-  app.get("/v1/reviews", async (req, res) => {
+export default (app) => {
+  app.get('/v1/reviews', async (req, res) => {
     try {
-      const productId = req.query.productId;
+      const { productId } = req.query;
       const reviews = await ReviewModel.find({ product: productId });
       if (reviews) {
         res.send(reviews);
@@ -15,7 +15,7 @@ export default app => {
     }
   });
 
-  app.post("/v1/reviews", async (req, res) => {
+  app.post('/v1/reviews', async (req, res) => {
     // To implement
     /* try {
       if (!req.isAdmin) {
@@ -32,7 +32,7 @@ export default app => {
     } */
   });
 
-  app.put("/v1/reviews/:id", async (req, res) => {
+  app.put('/v1/reviews/:id', async (req, res) => {
     // To implement
     /* try {
       if (!req.isAdmin) {
@@ -56,7 +56,7 @@ export default app => {
     } */
   });
 
-  app.delete("/v1/reviews/:id", async (req, res) => {
+  app.delete('/v1/reviews/:id', async (req, res) => {
     // To implement
     /* try {
       if (!req.isAdmin) {

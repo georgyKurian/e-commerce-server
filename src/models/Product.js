@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const ProductSchema = new mongoose.Schema({
   name: String,
   price: Number,
   images: [String],
   categories: [String],
-  isFeatured: Boolean
+  isFeatured: Boolean,
 });
 
-export const ProductModel = mongoose.model("Product", ProductSchema);
+export const ProductModel = mongoose.model('Product', ProductSchema);

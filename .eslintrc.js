@@ -1,10 +1,19 @@
 module.exports = {
   env: {
-    commonjs: true,
-    "jest/globals": true
+    browser: true,
+    es6: true,
   },
-  extends: ["standard", "plugin:prettier/recommended"],
-  plugins: ["jest"],
-  parser: "babel-eslint",
-  rules: {}
+  extends: [
+    'airbnb-base',
+  ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+  },
 };

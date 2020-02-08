@@ -1,13 +1,12 @@
-import { OrderModel } from "../models/Order";
+import { OrderModel } from '../models/Order';
 
-export default app => {
-  app.get("/v1/orders", async (req, res) => {
+export default (app) => {
+  app.get('/v1/orders', async (req, res) => {
     try {
       if (req.user === undefined) {
         res.status(401).end();
       }
-      const orders =
-        (await OrderModel.find({ customer: req.user.data._id })) || [];
+      const orders = (await OrderModel.find({ customer: req.user.data._id })) || [];
       if (orders) {
         res.send(orders);
       } else {
@@ -18,7 +17,7 @@ export default app => {
     }
   });
 
-  app.post("/v1/orders", async (req, res) => {
+  app.post('/v1/orders', async (req, res) => {
     try {
       if (req.body === undefined) {
         res.status(400).end();
@@ -28,7 +27,7 @@ export default app => {
         const orderData = {
           ...req.body,
           customer: req.user.data._id,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
         const order = await OrderModel.create(orderData);
         if (order) {
