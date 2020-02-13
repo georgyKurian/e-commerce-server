@@ -19,21 +19,23 @@ export default (app) => {
     UserModel.findOne({ email }, async (err, user) => {
       if (err) throw err;
       if (!user) {
-        const newUser = await UserModel.create({
+        UserModel.create({
           username: email.split('@')[0],
           email,
           role: 'customer',
+        }).then((newUser) => {
+          AuthentificationService.generate(newUser).then((token) => {
+            console.log('Created a new user: ', newUser);
+            EmailService.sendEmail(newUser, token);
+            res.status(200).end();
+          });
         });
-
-        const token = AuthentificationService.generate(newUser);
-        console.log('Created a new user: ', newUser);
-        EmailService.sendEmail(newUser, token);
-        res.status(200).end();
       } else {
-        const token = AuthentificationService.generate(user);
-        console.log('User exists. Generating a new token.');
-        EmailService.sendEmail(user, token);
-        res.status(200).end();
+        AuthentificationService.generate(user).then((token) => {
+          console.log('Created a new user: ', user);
+          EmailService.sendEmail(user, token);
+          res.status(200).end();
+        });
       }
     });
   });
