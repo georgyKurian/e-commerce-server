@@ -12,6 +12,6 @@ class AuthenticaionService {
   }
 }
 
-const AuthenticaionServiceSingleton = new AuthenticaionService();
+// const AuthenticaionServiceSingleton = new AuthenticaionService();
 
-export default AuthenticaionServiceSingleton;
+export default AuthenticaionService;

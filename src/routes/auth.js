@@ -11,29 +11,30 @@ export default (app) => {
     }
   });
 
-  app.post('/v1/login', (req, res) => {
+  app.post('/v1/login', async (req, res) => {
     const { email } = req.body;
     if (!(email && email.split('@').length === 2)) {
       res.status(400).end();
     }
-    const user = UserModel.findOne({ email });
+    UserModel.findOne({ email }, async (err, user) => {
+      if (err) throw err;
+      if (!user) {
+        const newUser = await UserModel.create({
+          username: email.split('@')[0],
+          email,
+          role: 'customer',
+        });
 
-    if (user) {
-      const token = AuthentificationService.generate(user);
-      console.log('User exists. Generating a new token.');
-      EmailService.sendEmail(user, token);
-      res.status(200).end();
-    } else {
-      const newUser = UserModel.create({
-        username: email.split('@')[0],
-        email,
-        role: 'customer',
-      });
-
-      const token = AuthentificationService.generate(newUser);
-      console.log('Created a new user: ', newUser);
-      EmailService.sendEmail(newUser, token);
-      res.status(200).end();
-    }
+        const token = AuthentificationService.generate(newUser);
+        console.log('Created a new user: ', newUser);
+        EmailService.sendEmail(newUser, token);
+        res.status(200).end();
+      } else {
+        const token = AuthentificationService.generate(user);
+        console.log('User exists. Generating a new token.');
+        EmailService.sendEmail(user, token);
+        res.status(200).end();
+      }
+    });
   });
 };
