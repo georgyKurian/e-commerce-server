@@ -5,7 +5,7 @@ import { UserModel } from '../models/User';
 export default (app) => {
   app.post('/v1/auth', async (req, res) => {
     if (req.user) {
-      res.send(req.user).end();
+      res.send(req.user.data).end();
     } else {
       res.status(401).end();
     }
