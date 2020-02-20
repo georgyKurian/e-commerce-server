@@ -27,14 +27,14 @@ export default (app) => {
           AuthentificationService.generate(newUser).then((token) => {
             console.log('Created a new user: ', newUser);
             EmailService.sendEmail(newUser, token);
-            res.status(200).end();
+            res.send({ token }).end();
           });
         });
       } else {
         AuthentificationService.generate(user).then((token) => {
           console.log('Created a new user: ', user);
           EmailService.sendEmail(user, token);
-          res.status(200).end();
+          res.send({ token }).end();
         });
       }
     });
