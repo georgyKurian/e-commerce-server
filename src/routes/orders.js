@@ -6,12 +6,14 @@ export default (app) => {
       if (req.user === undefined) {
         res.status(401).end();
       }
-      const orders = (await OrderModel.find({ customer: req.user.data._id })) || [];
-      if (orders) {
-        res.send(orders);
-      } else {
-        res.status(400).end();
-      }
+
+      OrderModel.find({ customer: req.user.data._id }, (err, orders) => {
+        if (orders) {
+          res.send(orders);
+        } else {
+          res.status(400).end();
+        }
+      });
     } catch (e) {
       res.status(404).end();
     }

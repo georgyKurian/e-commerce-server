@@ -1,7 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
 export const OrderSchema = new Schema({
-  customer: Schema.Types.ObjectId,
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   created_at: String,
   products: [
     {
