@@ -13,6 +13,7 @@ import getReviewRoutes from './routes/reviews';
 import getUserRoutes from './routes/users';
 import getAuthRoutes from './routes/auth';
 import getOrderRoutes from './routes/orders';
+import getPaymentRoutes from './routes/payment';
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ getUserRoutes(app);
 getAuthRoutes(app);
 getOrderRoutes(app);
 getReviewRoutes(app);
+getPaymentRoutes(app);
 
 // Catches 404
 app.use((req, res, next) => {
