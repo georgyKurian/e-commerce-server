@@ -1,13 +1,13 @@
-const stripe = require('stripe')('pk_test_RfZ1PvFjLuWOvHitWXLyQuHg00t9NwKTCK');
+const stripe = require('stripe')('sk_test_K8NejsGbnfInosovpfHLadFV001xXflaVN');
 
 export default (app) => {
   app.post('/v1/create-payment-intent', async (req, res) => {
     try {
-      const { items } = req.body;
+      const { cart } = req.body;
 
       // Create a PaymentIntent with the order amount and currency
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: 10.22,
+        amount: 1400,
         currency: 'cad',
       });
 
@@ -15,7 +15,8 @@ export default (app) => {
         clientSecret: paymentIntent.client_secret,
       });
     } catch (e) {
-      res.status(404).end();
+      console.error(e);
+      res.status(400).end();
     }
   });
 };
