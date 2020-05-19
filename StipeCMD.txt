@@ -1,0 +1,5 @@
+stipe login
+stripe listen --forward-to http://localhost:8085/v1/stripe/webhook
+
+Your pairing code is: genius-ardor-enrapt-joyous
+// Your webhook signing secret is whsec_l1CaqgoRdUzO75LxNtI4ED7tvR3JOnQD

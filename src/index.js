@@ -14,6 +14,7 @@ import getUserRoutes from './routes/users';
 import getAuthRoutes from './routes/auth';
 import getOrderRoutes from './routes/orders';
 import getPaymentRoutes from './routes/payment';
+import getStripeHookRoutes from './routes/stripeHook';
 
 dotenv.config();
 
@@ -23,6 +24,9 @@ const corsOptions = {
   origin: process.env.CORS_ORIGIN,
   optionsSuccessStatus: 200,
 };
+var webRouter = express.Router()
+var stripeWebHookRouter = express.Router()
+
 
 // middlewears
 app.use(
@@ -30,21 +34,33 @@ app.use(
     console.log('=> ', req.method, req.originalUrl, ' || ', time, ' ms');
   }),
 );
+
 app.use(helmet());
 app.use(cors(process.env !== 'production' ? undefined : corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(withAuthentication);
-app.use(withAdminPermission);
 app.use(logger);
 
-// routes
-getProductsRoutes(app);
-getUserRoutes(app);
-getAuthRoutes(app);
-getOrderRoutes(app);
-getReviewRoutes(app);
-getPaymentRoutes(app);
+// Web hook
+app.use('/v1/stripe/webhook',stripeWebHookRouter);
+getStripeHookRoutes(stripeWebHookRouter);
+
+
+// App Routes Middlewear 
+webRouter.use(bodyParser.json());
+webRouter.use(bodyParser.urlencoded({ extended: true }));
+webRouter.use(withAuthentication);
+webRouter.use(withAdminPermission);
+
+// App Routes
+getProductsRoutes(webRouter);
+getUserRoutes(webRouter);
+getAuthRoutes(webRouter);
+getOrderRoutes(webRouter);
+getReviewRoutes(webRouter);
+getPaymentRoutes(webRouter);
+
+app.use('',webRouter);
+
+// Webhook Route
 
 // Catches 404
 app.use((req, res, next) => {
