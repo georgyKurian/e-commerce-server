@@ -13,6 +13,8 @@ export default (userList, productList) => {
     orderList.push({
       customer: user._id,
       created_at: faker.date.between(fromDate, toDate).getTime(),
+      status: 'created',
+      paymentIntentId: faker.internet.password(),
       products: faker.custom.randomSubArray(productList, true, 5),
       contact: {
         fullName: faker.fake('{{name.firstName}} {{name.lastName}}'),

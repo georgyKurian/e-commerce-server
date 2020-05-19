@@ -44,7 +44,7 @@ app.use('/v1/stripe/webhook',stripeWebHookRouter);
 getStripeHookRoutes(stripeWebHookRouter);
 
 
-// App Routes Middlewear 
+// App Routes Middlewear
 webRouter.use(bodyParser.json());
 webRouter.use(bodyParser.urlencoded({ extended: true }));
 webRouter.use(withAuthentication);
