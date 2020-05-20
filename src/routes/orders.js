@@ -30,21 +30,31 @@ export default (app) => {
           const orderData = {
             ...req.body,
             customer: req.user.data._id,
-            timestamp: Date.now(),
+            status: 'pending',
+            created_at: Date.now(),
           };
           const newOrder = OrderModel(orderData);
 
           const amount = newOrder.totalAmount;
           const { paymentIntentId, clientSecret } = StripePaymentWrapper.createIntent(amount);
 
-          newOrder.paymentIntentId = paymentIntentId;
+          if (paymentIntentId) {
+            newOrder.paymentIntentId = paymentIntentId;
+          }
           const order = await newOrder.save();
           if (order) {
-            res.send(order).end();
+            res.send({ order, clientSecret }).end();
           } else {
             res.status(500).end();
           }
         }
+      } catch (e) {
+        res.status(404).end();
+      }
+    })
+    .put(async (req, res) => {
+      try {
+        // Update order before payment
       } catch (e) {
         res.status(404).end();
       }

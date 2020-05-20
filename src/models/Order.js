@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import mongooseHidden from 'mongoose-hidden';
 
 export const OrderSchema = new Schema({
   customer: {
@@ -6,7 +7,7 @@ export const OrderSchema = new Schema({
     ref: 'User',
   },
   created_at: String,
-  status: { type: String, enum: ['created', 'paid', 'completed', 'confirmed', 'cancelled', 'refunded'] },
+  status: { type: String, enum: ['pending', 'paid', 'completed', 'confirmed', 'amount-mismatch', 'cancelled', 'refunded'] },
   paymentIntentId: { type: String, index: true },
   products: [
     {
@@ -22,7 +23,7 @@ export const OrderSchema = new Schema({
     fullName: String,
     phoneNumber: String,
   },
-  shippingAddress: {
+  billingAddress: {
     country: String,
     city: String,
     addressLine1: String,
@@ -30,6 +31,8 @@ export const OrderSchema = new Schema({
     postalCode: String,
   },
 });
+
+OrderSchema.plugin(mongooseHidden);
 
 OrderSchema.virtual('totalAmount').get = () => this.products.reduce(
   (total, product) => (

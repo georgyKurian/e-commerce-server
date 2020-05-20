@@ -13,14 +13,14 @@ export default (userList, productList) => {
     orderList.push({
       customer: user._id,
       created_at: faker.date.between(fromDate, toDate).getTime(),
-      status: 'created',
+      status: 'completed',
       paymentIntentId: faker.internet.password(),
       products: faker.custom.randomSubArray(productList, true, 5),
       contact: {
         fullName: faker.fake('{{name.firstName}} {{name.lastName}}'),
         phoneNumber: faker.phone.phoneNumber('###-###-####'),
       },
-      shippingAddress: {
+      billingAddress: {
         country: faker.address.country(),
         city: faker.address.city(),
         addressLine1: faker.address.streetAddress(),
