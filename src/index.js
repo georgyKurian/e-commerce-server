@@ -24,8 +24,8 @@ const corsOptions = {
   origin: process.env.CORS_ORIGIN,
   optionsSuccessStatus: 200,
 };
-var webRouter = express.Router()
-var stripeWebHookRouter = express.Router()
+const webRouter = express.Router();
+const stripeWebHookRouter = express.Router();
 
 
 // middlewears
