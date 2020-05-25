@@ -22,7 +22,7 @@ export default (app) => {
     })
     .post(async (req, res) => {
       try {
-        if (req.body === undefined) {
+        if (req.body.items === undefined) {
           res.status(400).end();
         } else if (req.user === undefined) {
           res.status(401).end();
