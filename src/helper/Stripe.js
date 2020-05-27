@@ -2,15 +2,16 @@ const stripe = require('stripe')('sk_test_K8NejsGbnfInosovpfHLadFV001xXflaVN');
 
 const StripePaymentWrapper = {
 
-  createIntent: async (amount = 1400, currency = 'cad') => {
+  createIntent: (amount = 1400, currency = 'cad') => {
     try {
       // Create a PaymentIntent with the order amount and currency
-      const paymentIntent = await stripe.paymentIntents.create({
+      return stripe.paymentIntents.create({
         amount,
         currency,
-      });
-
-      return { paymentIntentId: paymentIntent.id, clientSecret: paymentIntent.client_secret };
+      }).then(
+        (paymentIntent) => ({ paymentIntentId: paymentIntent.id, clientSecret: paymentIntent.client_secret }),
+      )
+        .catch((err) => { console.log(`Stripe Error:${err}`); });
     } catch (e) {
       console.error(e);
     }

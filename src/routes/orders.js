@@ -20,7 +20,7 @@ export default (app) => {
         res.status(404).end();
       }
     })
-    .post(async (req, res) => {
+    .post((req, res) => {
       try {
         if (req.body.items === undefined) {
           res.status(400).end();
@@ -28,25 +28,31 @@ export default (app) => {
           res.status(401).end();
         } else {
           const orderData = {
-            ...req.body,
             customer: req.user.data._id,
             status: 'pending',
             created_at: Date.now(),
           };
           const newOrder = OrderModel(orderData);
-
-          const amount = newOrder.totalAmount;
-          const { paymentIntentId, clientSecret } = StripePaymentWrapper.createIntent(amount);
-
-          if (paymentIntentId) {
-            newOrder.paymentIntentId = paymentIntentId;
-          }
-          const order = await newOrder.save();
-          if (order) {
-            res.send({ order, clientSecret }).end();
-          } else {
-            res.status(500).end();
-          }
+          newOrder.setProducts(req.body.items).then(
+            () => {
+              const amount = newOrder.totalAmount;
+              StripePaymentWrapper.createIntent(amount).then(
+                ({ paymentIntentId, clientSecret }) => {
+                  if (paymentIntentId) {
+                    newOrder.paymentIntentId = paymentIntentId;
+                  }
+                  newOrder.save().then((order) => {
+                    if (order) {
+                      // orderId: newOrderId, orderTotal, paymentIntentSecret
+                      res.send({ orderId: order.id, orderTotal: amount, paymentIntentSecret: clientSecret }).end();
+                    } else {
+                      res.status(500).end();
+                    }
+                  });
+                },
+              );
+            },
+          );
         }
       } catch (e) {
         res.status(404).end();

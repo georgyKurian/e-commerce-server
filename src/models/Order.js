@@ -1,5 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import mongooseHidden from 'mongoose-hidden';
+import { ProductModel } from './Product';
+
 
 export const OrderSchema = new Schema({
   customer: {
@@ -34,10 +36,42 @@ export const OrderSchema = new Schema({
 
 OrderSchema.plugin(mongooseHidden);
 
-OrderSchema.virtual('totalAmount').get = () => this.products.reduce(
-  (total, product) => (
-    total + product.price * product.quantity
-  ), 0,
-);
+
+OrderSchema.methods.setProducts = function (items) {
+  this.products = [];
+  const productIdList = items.map((item) => item.productId);
+  if (productIdList.length !== 0) {
+    return ProductModel.find().where('_id').in(productIdList).exec()
+      .then(
+        (productList) => {
+          items.forEach((item) => {
+            for (let i = 0; i < productList.length; i += 1) {
+              if (productList[i].id === item.productId) {
+                this.products.push({
+                  _id: productList[i]._id,
+                  name: productList[i].name,
+                  price: productList[i].price,
+                  images: productList[i].images,
+                  categories: productList[i].categories,
+                  quantity: item.quantity,
+                });
+                return;
+              }
+            }
+            throw new Error('Product not found');
+          });
+        },
+      );
+  }
+  return null;
+};
+
+OrderSchema.virtual('totalAmount').get(function () {
+  return this.products.reduce(
+    (total, product) => (
+      total + product.price * product.quantity
+    ), 0,
+  );
+});
 
 export const OrderModel = mongoose.model('Order', OrderSchema);
