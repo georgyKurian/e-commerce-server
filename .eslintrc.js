@@ -1,10 +1,9 @@
 module.exports = {
   env: {
-    browser: true,
     es6: true,
   },
   extends: [
-    'airbnb-base',
+    'airbnb',
   ],
   globals: {
     Atomics: 'readonly',
@@ -15,6 +14,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "no-console": "off"
+    "no-console": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   },
 };
+
+//module.exports = {}

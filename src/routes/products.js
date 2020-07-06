@@ -38,8 +38,8 @@ export default (app) => {
           .then(() => {
             res.send(productList);
           })
-          .catch((err) => {
-            console.error(err);
+          .catch((error) => {
+            console.error(error);
           });
       },
     );

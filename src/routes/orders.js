@@ -1,68 +1,40 @@
+import OrderController from '../controllers/Orders';
 import { OrderModel } from '../models/Order';
-import StripePaymentWrapper from '../helper/Stripe';
 
 export default (app) => {
   app.route('/v1/orders')
-    .get(async (req, res) => {
-      try {
-        if (req.user === undefined) {
-          res.status(401).end();
-        }
+    .get(OrderController.findUserOrders)
+    .post(OrderController.createForPayment);
 
-        OrderModel.find({ customer: req.user.data._id }, (err, orders) => {
-          if (orders) {
-            res.send(orders);
-          } else {
-            res.status(400).end();
-          }
-        });
-      } catch (e) {
-        res.status(404).end();
+  app.route('/v1/orders/:orderId')
+    .all((req, res, next) => {
+      if (!(req.user && req.params.orderId)) {
+        res.status(400).end();
       }
-    })
-    .post((req, res) => {
-      try {
-        if (req.body.items === undefined) {
-          res.status(400).end();
-        } else if (req.user === undefined) {
-          res.status(401).end();
+      OrderModel.findById(req.params.orderId, (err, order) => {
+        if (err) {
+          res.status(400).json({ error: err });
+        } else if (order) {
+          if (order.customer.equals(req.user.data._id)) {
+            req.order = order;
+            next();
+          } else res.status(403).json({ error: 'Forbidden access' });
         } else {
-          const orderData = {
-            customer: req.user.data._id,
-            status: 'pending',
-            created_at: Date.now(),
-          };
-          const newOrder = OrderModel(orderData);
-          newOrder.setProducts(req.body.items).then(
-            () => {
-              const amount = newOrder.totalAmount;
-              StripePaymentWrapper.createIntent(amount).then(
-                ({ paymentIntentId, clientSecret }) => {
-                  if (paymentIntentId) {
-                    newOrder.paymentIntentId = paymentIntentId;
-                  }
-                  newOrder.save().then((order) => {
-                    if (order) {
-                      // orderId: newOrderId, orderTotal, paymentIntentSecret
-                      res.send({ orderId: order.id, orderTotal: amount, paymentIntentSecret: clientSecret }).end();
-                    } else {
-                      res.status(500).end();
-                    }
-                  });
-                },
-              );
-            },
-          );
+          res.status(400).json({ error: 'Invalid order' });
         }
-      } catch (e) {
-        res.status(404).end();
+      });
+    })
+    .get(OrderController.findOne)
+    .put((req, res) => {
+      if (req.body.items) {
+        OrderController.updateItems(req, res);
+      } else if (req.body.billingAddress || req.body.contact) {
+        OrderController.updateDetails(req, res);
+      } else if (req.body.status === 'paid') {
+        OrderController.updateStatus(req, res);
+      } else {
+        res.status(400).json({ error: 'Invalid operation!' });
       }
     })
-    .put(async (req, res) => {
-      try {
-        // Update order before payment
-      } catch (e) {
-        res.status(404).end();
-      }
-    });
+    .delete(OrderController.delete);
 };

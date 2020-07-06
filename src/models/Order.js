@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import mongooseHidden from 'mongoose-hidden';
 import { ProductModel } from './Product';
 
+const opts = { toJSON: { virtuals: true } };
 
 export const OrderSchema = new Schema({
   customer: {
@@ -26,13 +27,15 @@ export const OrderSchema = new Schema({
     phoneNumber: String,
   },
   billingAddress: {
-    country: String,
-    city: String,
     addressLine1: String,
     addressLine2: String,
+    city: String,
+    province: String,
+    country: String,        
     postalCode: String,
   },
-});
+},
+opts);
 
 OrderSchema.plugin(mongooseHidden);
 

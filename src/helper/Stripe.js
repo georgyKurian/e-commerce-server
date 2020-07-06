@@ -32,11 +32,15 @@ const StripePaymentWrapper = {
 
   updateIntent: async (paymentIntentId, amount) => {
     try {
-      const paymentIntent = await stripe.paymentIntents.update(
+      const {
+        client_secret: clientSecret,
+        amount: stripeAmount,
+        status,
+      } = await stripe.paymentIntents.update(
         paymentIntentId,
         { amount },
       );
-      return paymentIntent || null;
+      return { clientSecret, amount: stripeAmount, status };
     } catch (e) {
       console.error(e);
     }
