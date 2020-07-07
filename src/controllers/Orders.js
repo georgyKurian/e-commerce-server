@@ -4,7 +4,7 @@ import StripePaymentWrapper from '../helper/Stripe';
 const orderController = {};
 
 orderController.findUserOrders = (req, res) => {
-  OrderModel.find({ customer: req.user.data._id }, (err, orders) => {
+  OrderModel.find({ customer: req.user.data._id,  }).sort({created_at: -1}).exec((err, orders) => {
     if (orders) {
       res.send(orders);
     } else {
@@ -115,7 +115,7 @@ orderController.updateDetails = (req, res) => {
 
 orderController.updateStatus = (req, res) => {
   if(req.body.status === 'Paid' ) {
-    req.order.status = 'Paid';
+    req.order.status = 'paid';
   }
   req.order
     .save()

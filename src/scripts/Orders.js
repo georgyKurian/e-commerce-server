@@ -4,8 +4,8 @@ export default (userList, productList) => {
   const orderList = [];
 
   for (let id = 0; id <= 10; id += 1) {
-    const fromDate = new Date();
-    const toDate = new Date(
+    const toDate = new Date();
+    const fromDate = new Date(
       new Date().setFullYear(new Date().getFullYear() - 1),
     );
 
