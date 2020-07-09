@@ -11,7 +11,7 @@ export default (orderList) => {
         order: order._id,
         user: order.customer,
         product: product._id,
-        rating: faker.random.number({ min: 0, max: 10 }) * 5,
+        rating: faker.random.number({ min: 1, max: 5 }) * 10,
         created_at: faker.date
           .between(new Date(Number(order.created_at)), new Date())
           .getTime(),

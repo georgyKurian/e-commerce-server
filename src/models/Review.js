@@ -18,11 +18,11 @@ export const ReviewSchema = new Schema({
   created_at: String,
   rating: {
     type: Number,
-    min: 0,
+    min: 1,
     max: 50,
     validate: {
       validator(v) {
-        return v % 5 === 0;
+        return v % 10 === 0;
       },
       message: (props) => `${props.value} is not a valid rating`,
     },
