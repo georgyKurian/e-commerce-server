@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_K8NejsGbnfInosovpfHLadFV001xXflaVN');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const StripePaymentWrapper = {
 
