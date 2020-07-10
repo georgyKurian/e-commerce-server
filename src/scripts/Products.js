@@ -7,11 +7,11 @@ export default (() => {
     const categories = [];
     const catCount = faker.random.number(5);
     for (let catIndex = 0; catIndex < catCount; catIndex++) {
-      categories.push(faker.hacker.adjective());
+      categories.push(faker.commerce.productAdjective());
     }
     productList.push({
       name: faker.commerce.productName(),
-      price: faker.commerce.price(),
+      price: (faker.commerce.price() * 100),
       // faker.image.image(1280, 720, false)
       images: [
         `https://picsum.photos/id/${id * 2 - 1}/1280/720`,

@@ -4,7 +4,18 @@ export default (app) => {
   app.get('/v1/reviews', async (req, res) => {
     try {
       const { productId } = req.query;
-      const reviews = await ReviewModel.find({ product: productId });
+      const reviews = await ReviewModel
+        .find({ product: productId })
+        .populate({path:'user',select:'username'})
+        .select({
+          _id: 1,
+          title: 1,
+          comment: 1,
+          created_at: 1,
+          rating: 1,
+        })        
+        .lean();
+        
       if (reviews) {
         res.send(reviews);
       } else {

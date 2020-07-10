@@ -6,7 +6,7 @@ export default (orderList) => {
     order.products.forEach((product) => {
       console.log(`${order.created_at}\n`);
       reviews.push({
-        title: faker.lorem.sentences(),
+        title: faker.lorem.text(),
         comment: faker.lorem.paragraph(),
         order: order._id,
         user: order.customer,
