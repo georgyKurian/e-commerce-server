@@ -10,6 +10,7 @@
     "build": "babel src -d dist",
     "start": "node dist/index.js -p $PORT",
     "test": "standard && jest",
+    "grab-data": "babel-node data/grabber.js",
     "db:create": "docker build . -t mongodb_dev",
     "db:run": "docker run -p 27018:27017 --name mongodb_dev_instance -i -t mongodb_dev",
     "db:seed": "babel-node src/scripts/seed.js"
@@ -57,6 +58,7 @@
     "@babel/plugin-syntax-top-level-await": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.4",
+    "axios": "^0.19.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.5.1",
     "babel-preset-env": "^1.7.0",
