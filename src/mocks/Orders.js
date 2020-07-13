@@ -3,7 +3,7 @@ import faker from './Faker';
 export default (userList, productList) => {
   const orderList = [];
 
-  for (let id = 0; id <= 10; id += 1) {
+  for (let id = 0; id <= 200; id += 1) {
     const toDate = new Date();
     const fromDate = new Date(
       new Date().setFullYear(new Date().getFullYear() - 1),
