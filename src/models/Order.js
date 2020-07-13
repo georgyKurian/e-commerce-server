@@ -19,7 +19,12 @@ export const OrderSchema = new Schema({
       name: String,
       price: Number,
       images: [String],
-      categories: [String],
+      productDescription : {
+        title : String,
+        subtitle : String,
+        text : String,
+        features : [String],
+      }
     },
   ],
   contact: {

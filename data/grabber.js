@@ -111,16 +111,19 @@ const getProductJson = (productId) => {
                 }
                 
 				productData['view_list'].forEach(({image_url},index) => {
-					const newImageName = (index+1) + path.extname(image_url); 
+					/* const newImageName = (index+1) + path.extname(image_url); 
 					const newImagePath = path.resolve(dirPath, newImageName);
 					imageList.push(`${newImageName}/${newImageName}`);
-					downloadImage(image_url,newImagePath);
+                    downloadImage(image_url,newImagePath); */
+
+                    imageList.push(image_url);
+                    
 				});            
                 resolve({
-                    'id' : productData['id'],
+                    'adidasId' : productData['id'],
                     'name' : productData['name'],
-                    'model_number' : productData['model_number'],
-                    'product_description' : {
+                    'modelNumber' : productData['model_number'],
+                    'productDescription' : {
                         'title':productData['product_description']['title'],
                         'subtitle':productData['product_description']?.subtitle,
                         'text':productData['product_description']['text'],
@@ -132,7 +135,7 @@ const getProductJson = (productId) => {
                     'gender' : productData['attribute_list']['gender'],
                     'sport' : productData['attribute_list']['sport'],
                     'productType' : productData['attribute_list']['productType'],
-                    'images': []
+                    'images': imageList
                 });                
             })
             .catch((error=>{

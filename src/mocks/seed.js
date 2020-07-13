@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import db from '../db/index';
 import users from './Users';
-import products from './Products';
+import getAdidasProducts from './Products';
 import generateOrderData from './Orders';
 import generateReviewData from './Reviews';
 import { ProductModel } from '../models/Product';
@@ -24,19 +24,28 @@ db.once('open', () => {
       })
       .catch((e) => {
         console.error(e);
-      })),
+      }))
   );
 
   promises.push(
-    ProductModel.deleteMany().then(() => ProductModel.insertMany(products)
-      .then((productList) => {
-        console.log('Products data populated!');
-        return productList;
-      })
+    getAdidasProducts
+      .then((products) => (
+        ProductModel
+          .deleteMany()
+          .then(() => (
+            ProductModel
+              .insertMany(products)
+              .then((productList) => {
+                console.log('Products data populated!');
+                return productList;
+              })
+          ))
+      )
       .catch((e) => {
         console.error(e);
-      })),
+      }))
   );
+    
 
   promises.push(
     ReviewModel.deleteMany()
