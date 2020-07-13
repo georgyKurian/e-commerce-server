@@ -36,7 +36,7 @@
     "express-jwt": "^5.3.3",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.22",
+    "mongoose": "^5.9.23",
     "mongoose-hidden": "^1.9.0",
     "response-time": "^2.3.2",
     "stripe": "^8.69.0",
