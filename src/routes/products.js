@@ -10,23 +10,35 @@ export default (app) => {
     await ProductModel.find(
       categoryList.length > 0
         ? { categories: { $in: categoryList } }
-        : undefined,
-      (err, products) => {
-        if (err) throw err;
-        Promise.all(
-          products.map(async (product) => ReviewModel.aggregate([
-            { $match: { product: product._id } },
-            {
-              $group: {
-                _id: '$product',
-                rating: { $avg: '$rating' },
-                count: { $sum: 1 },
-              },
+        : undefined
+    )
+    .select({
+      name:1,
+      price : 1,
+      category : 1,
+      color : 1,
+      gender : 1,
+      sport : 1,
+      productType : 1,
+      images: 1
+    })
+    .slice('images',4)
+    .then(products => {
+      Promise.all(
+        products.map(async (product) => ReviewModel.aggregate([
+          { $match: { product: product._id } },
+          {
+            $group: {
+              _id: '$product',
+              rating: { $avg: '$rating' },
+              count: { $sum: 1 },
             },
-          ]).then((reviews) => {
-            const json = product.toJSON();
+          },
+        ])                   
+        .then((reviews) => {
+            const json = product.toJSON();              
             if (reviews[0] !== undefined) {
-              json.avgRating = reviews[0].rating;
+              json.avgRating = (reviews[0].rating).toFixed(2);
               json.reviewCount = reviews[0].count;
             } else {
               json.avgRating = 0;
@@ -35,14 +47,13 @@ export default (app) => {
             productList.push(json);
           })),
         )
-          .then(() => {
-            res.send(productList);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      },
-    );
+        .then(() => {
+          res.send(productList);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    })
   });
 
   app.get('/v1/products/:id', async (req, res) => {
