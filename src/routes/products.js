@@ -4,12 +4,17 @@ import { ReviewModel } from '../models/Review';
 export default (app) => {
   app.get('/v1/products', async (req, res) => {
     const { categories } = req.query;
+    let categoryRegexList;
     const categoryList = categories ? categories.split(',') : [];
+      
+
+    if(categoryList.length > 0){
+      categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
+    }
     const productList = [];
 
     await ProductModel.find(
-      categoryList.length > 0
-        ? { categories: { $in: categoryList } }
+      categoryRegexList ? { category: { $in: categoryRegexList } }
         : undefined
     )
     .select({
