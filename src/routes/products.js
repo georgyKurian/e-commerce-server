@@ -62,16 +62,34 @@ export default (app) => {
   });
 
   app.get('/v1/products/:id', async (req, res) => {
-    try {
-      const product = await ProductModel.findById(req.params.id);
-      if (product) {
-        res.send(product);
-      } else {
-        res.status(400).end();
-      }
-    } catch (e) {
-      res.status(404).end();
-    }
+    ProductModel
+      .findById(req.params.id)        
+      .then( product => {
+        ReviewModel.aggregate([
+          { $match: { product: product._id } },
+          {
+            $group: {
+              _id: '$product',
+              rating: { $avg: '$rating' },
+              count: { $sum: 1 },
+            },
+          },
+        ])                   
+        .then((reviews) => {
+          const json = product.toJSON();              
+          if (reviews[0] !== undefined) {
+            json.avgRating = Math.round(reviews[0].rating);
+            json.reviewCount = reviews[0].count;
+          } else {
+            json.avgRating = 0;
+            json.reviewCount = 0;
+          }
+          res.json(json);
+        });
+      })
+      .catch((error)=>{
+        res.status(404).end();
+      });
   });
 
   app.post('/v1/products', async (req, res) => {
