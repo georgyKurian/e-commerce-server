@@ -43,7 +43,7 @@ export default (app) => {
         .then((reviews) => {
             const json = product.toJSON();              
             if (reviews[0] !== undefined) {
-              json.avgRating = (reviews[0].rating).toFixed(2);
+              json.avgRating = Math.round(reviews[0].rating);
               json.reviewCount = reviews[0].count;
             } else {
               json.avgRating = 0;
