@@ -2,21 +2,21 @@ import { ProductModel } from '../models/Product';
 import { ReviewModel } from '../models/Review';
 
 export default (app) => {
-  app.get('/v1/products', async (req, res) => {
-    const { categories } = req.query;
+  app.get('/v1/products', async ({categories, start=1, limit=16}, res) => {
     let categoryRegexList;
     const categoryList = categories ? categories.split(',') : [];
-      
-
+    
     if(categoryList.length > 0){
       categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
-    }
-    const productList = [];
+    } 
 
-    await ProductModel.find(
+    ProductModel.find(
       categoryRegexList ? { category: { $in: categoryRegexList } }
         : undefined
     )
+    .sort({_id:1})
+    .skip(start-1)
+    .limit(limit)
     .select({
       name:1,
       price : 1,
@@ -28,37 +28,13 @@ export default (app) => {
       images: 1
     })
     .slice('images',4)
-    .then(products => {
-      Promise.all(
-        products.map(async (product) => ReviewModel.aggregate([
-          { $match: { product: product._id } },
-          {
-            $group: {
-              _id: '$product',
-              rating: { $avg: '$rating' },
-              count: { $sum: 1 },
-            },
-          },
-        ])                   
-        .then((reviews) => {
-            const json = product.toJSON();              
-            if (reviews[0] !== undefined) {
-              json.avgRating = Math.round(reviews[0].rating);
-              json.reviewCount = reviews[0].count;
-            } else {
-              json.avgRating = 0;
-              json.reviewCount = 0;
-            }
-            productList.push(json);
-          })),
-        )
-        .then(() => {
-          res.send(productList);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    .lean()
+    .then(products => {      
+      res.send(products);
     })
+    .catch((error) => {
+      console.error(error);
+    });
   });
 
   app.get('/v1/products/:id', async (req, res) => {
