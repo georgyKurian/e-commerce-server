@@ -2,10 +2,11 @@ import { ProductModel } from '../models/Product';
 import { ReviewModel } from '../models/Review';
 
 export default (app) => {
-  app.get('/v1/products', async ({categories, start=1, limit=16}, res) => {
+  app.get('/v1/products', async ({query : {categories, start=0, limit=16}}, res) => {
     let categoryRegexList;
     const categoryList = categories ? categories.split(',') : [];
     
+    console.log(categories);
     if(categoryList.length > 0){
       categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
     } 
@@ -15,8 +16,8 @@ export default (app) => {
         : undefined
     )
     .sort({_id:1})
-    .skip(start-1)
-    .limit(limit)
+    .skip(Number.parseInt(start))
+    .limit(Number.parseInt(limit))
     .select({
       name:1,
       price : 1,
