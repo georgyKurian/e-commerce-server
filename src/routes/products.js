@@ -1,49 +1,26 @@
 import { ProductModel } from '../models/Product';
 import { ReviewModel } from '../models/Review';
-import pagination from '../helper/pagination';
+import pagination from '../middlewear/pagination';
+import ProductController from '../controllers/ProductController';
 
 const productPagination = pagination(16);
 
 export default (app) => {
-  app.get('/v1/products', async ({query : {categories,...restQuery}}, res) => {
-    let categoryRegexList;
-
-    // Spliting out categories from request
-    const categoryList = categories ? categories.split(',') : [];
-    
-    // Generate RegExp for each category to search without case sensitivity
-    if(categoryList.length > 0){
-      categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
+  app.get(
+    '/v1/products',
+    productPagination, 
+    ({query : {categories, start, limit}}, res) => {
+      const categoryList = categories ? categories.split(',') : [];
+      ProductController
+      .findProducts(categoryList, start, limit)
+      .then(products => {      
+        res.send(products);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
-
-    const {start, limit} = productPagination(restQuery);
-
-    ProductModel.find(
-      categoryRegexList ? { category: { $in: categoryRegexList } }
-        : undefined
-    )
-    .sort({_id:1})
-    .skip(start)
-    .limit(limit)
-    .select({
-      name:1,
-      price : 1,
-      category : 1,
-      color : 1,
-      gender : 1,
-      sport : 1,
-      productType : 1,
-      images: 1
-    })
-    .slice('images',4)
-    .lean()
-    .then(products => {      
-      res.send(products);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  });
+  );
 
   app.get('/v1/products/:id', async (req, res) => {
     ProductModel
