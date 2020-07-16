@@ -3,6 +3,10 @@ import StripePaymentWrapper from '../helper/Stripe';
 
 const productController = {};
 
+
+productController.findById = (productId) => {
+  return ProductModel.findById(productId);
+}
 productController.findProducts = (categoryList, start=0, limit=16) => {
   let categoryRegexList;
 

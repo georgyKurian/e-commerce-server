@@ -11,18 +11,22 @@ export default (app) => {
       if (!(req.user && req.params.orderId)) {
         res.status(400).end();
       }
-      OrderModel.findById(req.params.orderId, (err, order) => {
-        if (err) {
-          res.status(400).json({ error: err });
-        } else if (order) {
+      OrderController
+        .findById(req.params.orderId) 
+        .then((order) => {
+          // Authorization check
           if (order.customer.equals(req.user.data._id)) {
             req.order = order;
             next();
-          } else res.status(403).json({ error: 'Forbidden access' });
-        } else {
-          res.status(400).json({ error: 'Invalid order' });
-        }
-      });
+          } 
+          else 
+          {
+            res.status(403).json({ error: 'Forbidden access' });
+          }
+        })
+        .catch(error => 
+          res.status(400).json(error) 
+        ); 
     })
     .get(OrderController.findOne)
     .put((req, res) => {

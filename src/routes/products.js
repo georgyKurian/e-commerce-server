@@ -22,36 +22,48 @@ export default (app) => {
     }
   );
 
-  app.get('/v1/products/:id', async (req, res) => {
-    ProductModel
-      .findById(req.params.id)        
-      .then( product => {
-        ReviewModel.aggregate([
-          { $match: { product: product._id } },
-          {
-            $group: {
-              _id: '$product',
-              rating: { $avg: '$rating' },
-              count: { $sum: 1 },
-            },
+  app
+    .route('/v1/products/:productId')
+    .all((req, res, next) => {
+      if (!req.params.productId) {
+        res.status(400).end();
+      }
+      ProductController
+        .findById(req.params.productId) 
+        .then((product) => {
+          req.product = product;
+          next();
+        })
+        .catch(error => 
+          res.status(400).json(error) 
+        ); 
+    })
+    .get((req, res) => {
+      ReviewModel.aggregate([
+        { $match: { product: req.product._id } },
+        {
+          $group: {
+            _id: '$product',
+            rating: { $avg: '$rating' },
+            count: { $sum: 1 },
           },
-        ])                   
-        .then((reviews) => {
-          const json = product.toJSON();              
-          if (reviews[0] !== undefined) {
-            json.avgRating = Math.round(reviews[0].rating);
-            json.reviewCount = reviews[0].count;
-          } else {
-            json.avgRating = 0;
-            json.reviewCount = 0;
-          }
-          res.json(json);
-        });
+        },
+      ])                   
+      .then((reviews) => {
+        const json = req.product.toJSON();              
+        if (reviews[0] !== undefined) {
+          json.avgRating = Math.round(reviews[0].rating);
+          json.reviewCount = reviews[0].count;
+        } else {
+          json.avgRating = 0;
+          json.reviewCount = 0;
+        }
+        res.json(json);
       })
       .catch((error)=>{
-        res.status(404).end();
+        res.send(error);
       });
-  });
+    });
 
   app.post('/v1/products', async (req, res) => {
     try {

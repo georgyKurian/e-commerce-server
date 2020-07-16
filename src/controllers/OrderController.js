@@ -3,6 +3,8 @@ import StripePaymentWrapper from '../helper/Stripe';
 
 const orderController = {};
 
+orderController.findById = (orderId) => OrderModel.findById(orderId);
+
 orderController.findUserOrders = (req, res) => {
   OrderModel.find({ customer: req.user.data._id,  }).sort({created_at: -1}).exec((err, orders) => {
     if (orders) {
