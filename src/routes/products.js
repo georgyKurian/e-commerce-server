@@ -1,23 +1,30 @@
 import { ProductModel } from '../models/Product';
 import { ReviewModel } from '../models/Review';
+import pagination from '../helper/pagination';
+
+const productPagination = pagination(16);
 
 export default (app) => {
-  app.get('/v1/products', async ({query : {categories, start=0, limit=16}}, res) => {
+  app.get('/v1/products', async ({query : {categories,...restQuery}}, res) => {
     let categoryRegexList;
+
+    // Spliting out categories from request
     const categoryList = categories ? categories.split(',') : [];
     
-    console.log(categories);
+    // Generate RegExp for each category to search without case sensitivity
     if(categoryList.length > 0){
       categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
-    } 
+    }
+
+    const {start, limit} = productPagination(restQuery);
 
     ProductModel.find(
       categoryRegexList ? { category: { $in: categoryRegexList } }
         : undefined
     )
     .sort({_id:1})
-    .skip(Number.parseInt(start))
-    .limit(Number.parseInt(limit))
+    .skip(start)
+    .limit(limit)
     .select({
       name:1,
       price : 1,
