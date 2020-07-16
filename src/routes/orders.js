@@ -1,4 +1,4 @@
-import OrderController from '../controllers/Orders';
+import OrderController from '../controllers/OrderController.js';
 import { OrderModel } from '../models/Order';
 
 export default (app) => {
