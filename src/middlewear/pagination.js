@@ -5,7 +5,7 @@ const parseToDecimal = (string, defaultNumber) => {
 
 const pagination = (defaultSize=16) => {
     return (req, res, next) => {
-        req.query.page = parseToDecimal(req.query.page,0);
+        req.query.skip = parseToDecimal(req.query.page,0) * defaultSize;
         req.query.size = parseToDecimal(req.query.size,defaultSize);
         next();
     };
