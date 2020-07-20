@@ -3,10 +3,10 @@ const parseToDecimal = (string, defaultNumber) => {
     return Number.isInteger(parsedNumber) ? parsedNumber:defaultNumber;
 };
 
-const pagination = (defaultLimit=16) => {
+const pagination = (defaultSize=16) => {
     return (req, res, next) => {
-        req.query.start = parseToDecimal(req.query.start,0);
-        req.query.limit = parseToDecimal(req.query.limit,defaultLimit);
+        req.query.page = parseToDecimal(req.query.page,0);
+        req.query.size = parseToDecimal(req.query.size,defaultSize);
         next();
     };
 };

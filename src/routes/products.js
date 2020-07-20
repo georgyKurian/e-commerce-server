@@ -9,10 +9,10 @@ export default (app) => {
   app.get(
     '/v1/products',
     productPagination, 
-    ({query : {categories, start, limit}}, res) => {
+    ({query : {categories, page, size}}, res) => {
       const categoryList = categories ? categories.split(',') : [];
       ProductController
-      .findProducts(categoryList, start, limit)
+      .findProducts(categoryList, page, size)
       .then(products => {      
         res.send(products);
       })
