@@ -103,12 +103,14 @@ const getProductJson = productId => {
           fs.mkdirSync(dirPath);
         } */
 
-        productData["view_list"].forEach(({ image_url }, index) => {
+        productData["view_list"].forEach(({ image_url, video_url }, index) => {
           /* const newImageName = (index+1) + path.extname(image_url); 
 					const newImagePath = path.resolve(dirPath, newImageName);
 					imageList.push(`${newImageName}/${newImageName}`);
           downloadImage(image_url,newImagePath); */
-          imageList.push(image_url);
+          if( ! video_url ) {
+            imageList.push(image_url);
+          }
         });
         resolve({
           adidasId: productData["id"],
