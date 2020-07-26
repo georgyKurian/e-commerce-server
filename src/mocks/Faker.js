@@ -1,13 +1,20 @@
 import faker from 'faker';
 
 faker.custom = {
-  randomSubArray(list, isRandomSize = true, arraySize = null) {
+  randomSubArray(list, isRandomSize = true, maxArraySize = null) {
     const newArray = [];
-    if (isRandomSize && !arraySize) { arraySize = faker.random.number({ min: 1, max: list.length }); }
+    let arraySize = maxArraySize;
+    if (isRandomSize) { 
+      maxArraySize = maxArraySize ? maxArraySize : list.length;
+      arraySize = faker.random.number({ min: 1, max: maxArraySize }); 
+    }
+    let indexList = []
     for (let index = 0; index < arraySize; index++) {
-      newArray.push(
-        list[faker.random.number({ min: 0, max: list.length - 1 })],
-      );
+      const productIndex = faker.random.number({ min: 0, max: list.length - 1 });
+      if(!indexList.indexOf(productIndex)) {
+        indexList.push(productIndex);
+        newArray.push(list[productIndex]);
+      }
     }
     return newArray;
   },
