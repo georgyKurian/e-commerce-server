@@ -18,15 +18,17 @@ export default (app) => {
             res.send(products);
           });
       }
-      const categoryList = categories ? categories.split(',') : [];
-      ProductController
-      .findProducts(categoryList, skip, size)
-      .then(products => {      
-        res.send(products);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      else{
+        const categoryList = categories ? categories.split(',') : [];
+        ProductController
+        .findProducts(categoryList, skip, size)
+        .then(products => {      
+          res.send(products);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }      
     }
   );
 
