@@ -15,9 +15,9 @@ export const OrderSchema = new Schema({
   products: [
     {
       _id: Schema.Types.ObjectId,
-      quantity: Number,
-      name: String,
-      price: Number,
+      quantity: { type:Number, required:true},
+      name: { type:String, required:true},
+      price: { type:Number, required:true},
       images: [String],
       productDescription : {
         title : String,
@@ -32,12 +32,12 @@ export const OrderSchema = new Schema({
     phoneNumber: String,
   },
   billingAddress: {
-    addressLine1: String,
+    addressLine1: { type:String, required:true},
     addressLine2: String,
-    city: String,
-    province: String,
-    country: String,        
-    postalCode: String,
+    city: { type:String, required:true},
+    province: { type:String, required:true},
+    country: { type:String, required:true},   
+    postalCode: { type:String, required:true},
   },
 },
 opts);
