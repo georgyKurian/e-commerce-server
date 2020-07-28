@@ -1,5 +1,6 @@
 import { ProductModel } from '../models/Product';
 import StripePaymentWrapper from '../helper/Stripe';
+import mongoose from 'mongoose';
 
 const productController = {};
 
@@ -7,6 +8,8 @@ const productController = {};
 productController.findById = (productId) => {
   return ProductModel.findById(productId);
 }
+
+
 productController.findProducts = (categoryList, start=0, limit=16) => {
   let categoryRegexList;
 
@@ -35,6 +38,32 @@ productController.findProducts = (categoryList, start=0, limit=16) => {
   .slice('images',4)
   .lean()
 };
+
+
+productController.findProductsByIds = (idList, start=0, limit=16) => {
+  const idObjectList = idList.map((productId) => new mongoose.Types.ObjectId(productId));
+
+  return ProductModel.find(
+   { _id: { $in: idObjectList } }
+  )
+  .sort({created_at: -1})
+  .skip(start)
+  .limit(limit)
+  .select({
+    name:1,
+    price : 1,
+    category : 1,
+    color : 1,
+    gender : 1,
+    sport : 1,
+    productType : 1,
+    images: 1
+  })
+  .slice('images',4)
+  .lean()
+};
+
+
 /* 
 productController.findOne = (req, res) => {
   res.send(req.order);
