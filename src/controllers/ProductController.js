@@ -10,7 +10,7 @@ productController.findById = (productId) => {
 }
 
 
-productController.findProducts = (categoryList, start=0, limit=16) => {
+productController.findProducts = (categoryList, start, limit) => {
   let categoryRegexList;
 
   // Generate RegExp for each category to search without case sensitivity

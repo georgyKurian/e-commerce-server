@@ -8,9 +8,21 @@ export const OrderSchema = new Schema({
   customer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required:true,
   },
-  created_at: String,
-  status: { type: String, enum: ['pending', 'paid', 'completed', 'confirmed', 'amount-mismatch', 'cancelled', 'refunded'] },
+  status: {
+    type: String, 
+    enum: [
+      'pending',
+      'paid',
+      'completed',
+      'confirmed',
+      'amount-mismatch',
+      'cancelled',
+      'refunded'
+    ],
+    required:true,
+  },
   paymentIntentId: { type: String, index: true },
   products: [
     {
@@ -39,6 +51,7 @@ export const OrderSchema = new Schema({
     country: { type:String, required:true},   
     postalCode: { type:String, required:true},
   },
+  created_at: {type:String,required:true},
 },
 opts);
 

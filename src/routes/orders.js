@@ -1,9 +1,21 @@
 import OrderController from '../controllers/OrderController.js';
 import { OrderModel } from '../models/Order';
+import pagination from '../middlewear/pagination.js';
+
+const orderPagination = pagination(10);
 
 export default (app) => {
   app.route('/v1/orders')
-    .get(OrderController.findUserOrders)
+    .get(
+      orderPagination,
+      ({user, query : {skip, size}}, res) => {        
+        OrderController
+          .findUserOrders(user.data._id, skip, size)
+          .then(orders => {      
+            res.send(orders);
+          })
+      }
+    )
     .post(OrderController.createForPayment);
 
   app.route('/v1/orders/:orderId')
@@ -19,8 +31,7 @@ export default (app) => {
             req.order = order;
             next();
           } 
-          else 
-          {
+          else {
             res.status(403).json({ error: 'Forbidden access' });
           }
         })

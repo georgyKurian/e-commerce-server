@@ -6,18 +6,22 @@ export const ReviewSchema = new Schema({
   order: {
     type: Schema.Types.ObjectId,
     ref: 'Order',
+    required:true,
   },
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
+    required:true,
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required:true,
   },
-  created_at: String,
+  created_at: {type:String,required:true,},
   rating: {
     type: Number,
+    required:true,
     min: 1,
     max: 50,
     validate: {
