@@ -1,76 +1,37 @@
-import { ProductModel } from '../models/Product';
+import { ReviewModel } from '../models/Review';
 import StripePaymentWrapper from '../helper/Stripe';
-import mongoose from 'mongoose';
 
-const productController = {};
+const reviewController = {};
 
+reviewController.findById = (reviewId) => ReviewModel.findById(reviewId);
 
-productController.findById = (productId) => {
-  return ProductModel.findById(productId);
-}
+reviewController.findUserReviews = (userId, start, limit) => {
+  return ReviewModel
+    .find({ user: userId,  })
+    .sort({created_at: -1})
+    .skip(start)
+    .limit(limit)
+  };
 
-
-productController.findProducts = (categoryList, start, limit) => {
-  let categoryRegexList;
-
-  // Generate RegExp for each category to search without case sensitivity
-  if(categoryList.length > 0){
-    categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
-  }
-
-  return ProductModel.find(
-    categoryRegexList ? { category: { $in: categoryRegexList } }
-      : undefined
-  )
+reviewController.findProductReviews = (productId, start, limit) => {
+  return ReviewModel
+  .find({ product: productId })
   .sort({created_at: -1})
   .skip(start)
   .limit(limit)
+  .populate({path:'user',select:'username'})
   .select({
-    name:1,
-    price : 1,
-    category : 1,
-    color : 1,
-    gender : 1,
-    sport : 1,
-    productType : 1,
-    images: 1
-  })
-  .slice('images',4)
-  .lean()
-};
+    _id: 1,
+    title: 1,
+    comment: 1,
+    created_at: 1,
+    rating: 1,
+  })        
+  .lean();
+  };
 
 
-productController.findProductsByIds = (idList, start=0, limit=16) => {
-  const idObjectList = idList.map((productId) => new mongoose.Types.ObjectId(productId));
-
-  return ProductModel.find(
-   { _id: { $in: idObjectList } }
-  )
-  .sort({created_at: -1})
-  .skip(start)
-  .limit(limit)
-  .select({
-    name:1,
-    price : 1,
-    category : 1,
-    color : 1,
-    gender : 1,
-    sport : 1,
-    productType : 1,
-    images: 1
-  })
-  .slice('images',4)
-  .lean()
-};
-
-
-/* 
-productController.findOne = (req, res) => {
-  res.send(req.order);
-};
-
-
-productController.update = (req, res) => {
+reviewController.update = (req, res) => {
   req.order.update(req.body, (err, orders) => {
     if (orders) {
       res.status(200).end();
@@ -80,7 +41,7 @@ productController.update = (req, res) => {
   });
 };
 
-productController.delete = (req, res) => {
+reviewController.delete = (req, res) => {
   OrderModel.findByIdAndDelete(req.order._id, (err, order) => {
     if (order) {
       res.send(order);
@@ -91,7 +52,7 @@ productController.delete = (req, res) => {
   });
 };
 
-productController.createForPayment = (req, res) => {
+reviewController.createForPayment = (req, res) => {
   try {
     if (req.body.items === undefined || req.user === undefined) {
       res.status(400).end();
@@ -129,7 +90,7 @@ productController.createForPayment = (req, res) => {
   }
 };
 
-productController.updateItems = (req, res) => {
+reviewController.updateItems = (req, res) => {
   req.order
     .setProducts(req.body.items)
     .then(() => {
@@ -153,7 +114,7 @@ productController.updateItems = (req, res) => {
     });
 };
 
-productController.updateDetails = (req, res) => {
+reviewController.updateDetails = (req, res) => {
   req.order.billingAddress = req.body.billingAddress;
   req.order
     .save()
@@ -165,7 +126,7 @@ productController.updateDetails = (req, res) => {
     });
 };
 
-productController.updateStatus = (req, res) => {
+reviewController.updateStatus = (req, res) => {
   if(req.body.status === 'Paid' ) {
     req.order.status = 'paid';
   }
@@ -179,5 +140,5 @@ productController.updateStatus = (req, res) => {
     });    
 };
 
- */
-export default productController;
+
+export default reviewController;

@@ -5,15 +5,16 @@ const orderController = {};
 
 orderController.findById = (orderId) => OrderModel.findById(orderId);
 
-orderController.findUserOrders = (req, res) => {
-  OrderModel.find({ customer: req.user.data._id,  }).sort({created_at: -1}).exec((err, orders) => {
-    if (orders) {
-      res.send(orders);
-    } else {
-      res.status(400).json({ error: err });
-    }
-  });
-};
+orderController.findUserOrders = (userId, start, limit) => {
+  return OrderModel
+    .find({ customer: userId,  })
+    .sort({created_at: -1})
+    .skip(start)
+    .limit(limit)
+    .select({
+      paymentIntentId:0
+    })
+  };
 
 orderController.findOne = (req, res) => {
   res.send(req.order);

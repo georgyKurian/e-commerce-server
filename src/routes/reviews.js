@@ -1,31 +1,24 @@
 import { ReviewModel } from '../models/Review';
 import mongoose from 'mongoose';
+import ReviewController from '../controllers/ReviewController';
+import pagination from '../middlewear/pagination';
+
+const reviewPagination = pagination(10);
 
 export default (app) => {
-  app.get('/v1/reviews', async (req, res) => {
-    try {
-      const { productId } = req.query;  
-      const reviews = await ReviewModel
-        .find({ product: productId })
-        .populate({path:'user',select:'username'})
-        .select({
-          _id: 1,
-          title: 1,
-          comment: 1,
-          created_at: 1,
-          rating: 1,
-        })        
-        .lean();
-        
-      if (reviews) {
-        res.send(reviews);
-      } else {
-        res.status(400).end();
-      }
-    } catch (e) {
-      res.status(404).end();
+  app.
+  use(reviewPagination)
+  .get(
+    '/v1/reviews', 
+    ({query:{productId}, skip, size}, res) => {
+      ReviewController
+        .findProductReviews(productId,skip, size)
+        .then((reviews) => {
+            res.send(reviews);
+          } 
+        )
     }
-  });
+  );
 
   app.get('/v1/reviews/summary', async (req, res) => {
     try {

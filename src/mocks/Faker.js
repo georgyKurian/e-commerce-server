@@ -11,7 +11,7 @@ faker.custom = {
     let indexList = []
     for (let index = 0; index < arraySize; index++) {
       const productIndex = faker.random.number({ min: 0, max: list.length - 1 });
-      if(!indexList.indexOf(productIndex)) {
+      if(indexList.indexOf(productIndex)===-1) {
         indexList.push(productIndex);
         newArray.push(list[productIndex]);
       }
