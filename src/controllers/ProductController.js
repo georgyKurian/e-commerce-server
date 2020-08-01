@@ -4,39 +4,55 @@ import mongoose from 'mongoose';
 
 const productController = {};
 
+const sortByField = (field) => {
+  switch(field){
+    case 'price-low-to-high': return { price: 1};
+    case 'price-high-to-low': return { price: -1};
+    case 'newest': return { created_at: -1};
+    default: return { created_at: -1};
+  }
+};
+
+const filterBy = (filter) => {
+  switch(field){
+    case 'price-low-to-high': return { price: 1};
+    case 'price-high-to-low': return { price: -1};
+    case 'newest': return { created_at: -1};
+    default: return { created_at: -1};
+  }
+}
+
 
 productController.findById = (productId) => {
   return ProductModel.findById(productId);
 }
 
 
-productController.findProducts = (categoryList, start, limit) => {
-  let categoryRegexList;
+productController.findProducts = (filters, sortBy, start, limit) => {
+  /* let categoryRegexList;
 
   // Generate RegExp for each category to search without case sensitivity
   if(categoryList.length > 0){
     categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
-  }
+  } */
 
-  return ProductModel.find(
-    categoryRegexList ? { category: { $in: categoryRegexList } }
-      : undefined
-  )
-  .sort({created_at: -1})
-  .skip(start)
-  .limit(limit)
-  .select({
-    name:1,
-    price : 1,
-    category : 1,
-    color : 1,
-    gender : 1,
-    sport : 1,
-    productType : 1,
-    images: 1
-  })
-  .slice('images',4)
-  .lean()
+  return ProductModel
+    .find()
+    .sort(sortByField(sortBy))
+    .skip(start)
+    .limit(limit)
+    .select({
+      name:1,
+      price : 1,
+      category : 1,
+      color : 1,
+      gender : 1,
+      sport : 1,
+      productType : 1,
+      images: 1
+    })
+    .slice('images',4)
+    .lean()
 };
 
 
