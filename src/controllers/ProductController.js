@@ -13,19 +13,28 @@ const sortByField = (field) => {
   }
 };
 
-const filterBy = (filters) => {
-  const queryObject = {};
-  console.log("filter ------>"+JSON.stringify(filters));
-  console.log("filter ------>"+JSON.stringify(Object.keys(filters)));
+const filterFieldMap = (fieldKey,values) => {  
+  let queryObject = {};  
+  switch(fieldKey){
+    case 'gender':
+      queryObject[fieldKey] = values;
+      return queryObject;
+    case 'category':
+    default:
+      queryObject[fieldKey] = new RegExp(`^${values}$`,'i');
+      return queryObject;
+  }
+};
+
+const filterQueryBuiilder = (filters) => {
+  let queryObject = {};
   Object
     .keys(filters)
-    .forEach(filterKey => {
-      console.log("Loop"+filterKey);
-      const values = filters[filterKey].split(',');
-      queryObject[filterKey] = {'$in' : values};
+    .forEach(filterKey => { 
+      const object = filterFieldMap(filterKey,filters[filterKey]);      
+      queryObject = { ...queryObject, ...object}
     }
   );
-  console.log("filter mongo------>"+JSON.stringify(queryObject));
   return Object.keys(filters).length > 0 ? queryObject:null;
 }
 
@@ -36,15 +45,8 @@ productController.findById = (productId) => {
 
 
 productController.findProducts = (filters, sortBy, start, limit) => {
-  /* let categoryRegexList;
-
-  // Generate RegExp for each category to search without case sensitivity
-  if(categoryList.length > 0){
-    categoryRegexList = categoryList.map((category)=> new RegExp(category,'i'));
-  } */
-
   return ProductModel
-    .find(filterBy(filters))
+    .find(filterQueryBuiilder(filters))
     .sort(sortByField(sortBy))
     .skip(start)
     .limit(limit)
