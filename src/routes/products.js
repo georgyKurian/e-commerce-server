@@ -9,18 +9,18 @@ export default (app) => {
   app.get(
     '/v1/products',
     productPagination, 
-    ({query : {ids, sortBy, skip, size, ...filters}}, res) => {
+    ({query : {ids, sortBy, skip, limit, ...filters}}, res) => {
       if (ids) {
         const idList = ids.split(",");
         ProductController
-          .findProductsByIds(idList, skip, size)
+          .findProductsByIds(idList, skip, limit)
           .then(products => {      
             res.send(products);
           });
       }
       else {
         ProductController
-        .findProducts(filters, filters, sortBy, skip, size)
+        .findProducts(filters, sortBy, skip, limit)
         .then(products => {      
           res.send(products);
         })

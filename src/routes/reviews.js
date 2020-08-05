@@ -10,9 +10,9 @@ export default (app) => {
   use(reviewPagination)
   .get(
     '/v1/reviews', 
-    ({query:{productId}, skip, size}, res) => {
+    ({query:{productId}, skip, limit}, res) => {
       ReviewController
-        .findProductReviews(productId,skip, size)
+        .findProductReviews(productId,skip, limit)
         .then((reviews) => {
             res.send(reviews);
           } 
