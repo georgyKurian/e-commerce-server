@@ -13,13 +13,20 @@ const sortByField = (field) => {
   }
 };
 
-const filterBy = (filter) => {
-  switch(field){
-    case 'price-low-to-high': return { price: 1};
-    case 'price-high-to-low': return { price: -1};
-    case 'newest': return { created_at: -1};
-    default: return { created_at: -1};
-  }
+const filterBy = (filters) => {
+  const queryObject = {};
+  console.log("filter ------>"+JSON.stringify(filters));
+  console.log("filter ------>"+JSON.stringify(Object.keys(filters)));
+  Object
+    .keys(filters)
+    .forEach(filterKey => {
+      console.log("Loop"+filterKey);
+      const values = filters[filterKey].split(',');
+      queryObject[filterKey] = {'$in' : values};
+    }
+  );
+  console.log("filter mongo------>"+JSON.stringify(queryObject));
+  return Object.keys(filters).length > 0 ? queryObject:null;
 }
 
 
@@ -37,7 +44,7 @@ productController.findProducts = (filters, sortBy, start, limit) => {
   } */
 
   return ProductModel
-    .find()
+    .find(filterBy(filters))
     .sort(sortByField(sortBy))
     .skip(start)
     .limit(limit)

@@ -9,8 +9,8 @@ export default (app) => {
   app.get(
     '/v1/products',
     productPagination, 
-    ({query : {ids, filters, sortBy, skip, size}}, res) => {
-      if(ids){
+    ({query : {ids, sortBy, skip, size, ...filters}}, res) => {
+      if (ids) {
         const idList = ids.split(",");
         ProductController
           .findProductsByIds(idList, skip, size)
@@ -18,9 +18,9 @@ export default (app) => {
             res.send(products);
           });
       }
-      else{
+      else {
         ProductController
-        .findProducts(filters, sortBy, skip, size)
+        .findProducts(filters, filters, sortBy, skip, size)
         .then(products => {      
           res.send(products);
         })
