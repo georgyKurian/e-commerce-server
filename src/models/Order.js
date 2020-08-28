@@ -44,12 +44,15 @@ export const OrderSchema = new Schema({
     phoneNumber: String,
   },
   billingAddress: {
-    addressLine1: { type:String, required:true},
-    addressLine2: String,
-    city: { type:String, required:true},
-    province: { type:String, required:true},
-    country: { type:String, required:true},   
-    postalCode: { type:String, required:true},
+    type:{
+      addressLine1: { type:String, required:true},
+      addressLine2: String,
+      city: { type:String, required:true},
+      province: { type:String, required:true},
+      country: { type:String, required:true},   
+      postalCode: { type:String, required:true},
+    },
+    required:false    
   },
   created_at: {type:String,required:true},
 },
