@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Server - nodemon",
-      "program": "${workspaceFolder}/src/index.js",
+      "program": "./src/index.js",
       "stopOnEntry": false,
       "args": [],
       "preLaunchTask": "npm: debug-build",
@@ -23,7 +23,7 @@
       "sourceMaps": true,
       "trace": true,
       "outFiles": [
-        "${workspaceRoot}/dist/**.js"
+        "./dist/**.js"
       ]
     }
   ]

@@ -8,9 +8,9 @@ export default (app) => {
   app.route('/v1/orders')
     .get(
       orderPagination,
-      ({user, query : {skip, size}}, res) => {        
+      ({user, query : {skip, limit}}, res) => {        
         OrderController
-          .findUserOrders(user.data._id, skip, size)
+          .findUserOrders(user.data._id, skip, limit)
           .then(orders => {      
             res.send(orders);
           })
