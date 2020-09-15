@@ -119,15 +119,15 @@ orderController.updateDetails = (req, res) => {
 orderController.updateStatus = (req, res) => {
   if(req.body.status === 'Paid' ) {
     req.order.status = 'paid';
-  }
-  req.order
-    .save()
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch((error) => {
-      res.status(400).json({ error });
-    });    
+    req.order
+      .save()
+      .then(() => {
+        res.status(200).end();
+      })
+      .catch((error) => {
+        res.status(400).json({ error });
+      });
+  }      
 };
 
 
