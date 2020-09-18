@@ -4,6 +4,19 @@ import { ProductModel } from './Product';
 
 const opts = { toJSON: { virtuals: true } };
 
+export const ORDER_STATUS = {
+  'PENDING' : 'pending',
+  'PAYMENT_INITIATED' : 'payment-initiated',
+  'PROCESSING' : 'processing',
+  'COMPLETED' : 'completed',
+  'AMOUNT_MISMATCH' : 'amount-mismatch',
+  'FAILED' : 'failed',
+  'CANCELLED' : 'cancelled',
+  'REFUNDED' : 'refunded'
+}
+
+const orderStatusList = Object.keys(ORDER_STATUS);
+
 export const OrderSchema = new Schema({
   customer: {
     type: Schema.Types.ObjectId,
@@ -13,15 +26,19 @@ export const OrderSchema = new Schema({
   status: {
     type: String, 
     enum: [
-      'pending',
-      'paid',
-      'completed',
-      'confirmed',
-      'amount-mismatch',
-      'cancelled',
-      'refunded'
+      ORDER_STATUS.PENDING,
+      ORDER_STATUS.PAYMENT_INITIATED,
+      ORDER_STATUS.PROCESSING,
+      ORDER_STATUS.COMPLETED,
+      ORDER_STATUS.AMOUNT_MISMATCH,
+      ORDER_STATUS.FAILED,
+      ORDER_STATUS.CANCELLED,
+      ORDER_STATUS.REFUNDED,
     ],
     required:true,
+    set: function (status) {
+      this._status = status;
+    }
   },
   paymentIntentId: { type: String, index: true },
   products: [
