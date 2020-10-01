@@ -38,6 +38,7 @@ export const OrderSchema = new Schema({
     required:true,
     set: function (status) {
       this._status = status;
+      return status;
     }
   },
   paymentIntentId: { type: String, index: true },
@@ -106,6 +107,16 @@ OrderSchema.methods.setProducts = function (items) {
   }
   return null;
 };
+
+OrderSchema.pre('save', function (next) {
+  var oldStatus = this._status;
+  if(this.isModified('status')) {
+    // Some condition that fires before save if the email changes ... or something.
+    // Maybe we wanna fire off an email to the old address to let them know it changed 
+    console.log("%s has changed their status to %s", oldStatus, this.status);
+  }
+  next();
+});
 
 OrderSchema.virtual('totalAmount').get(function () {
   return this.products.reduce(
