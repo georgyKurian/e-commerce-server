@@ -5,8 +5,8 @@
   "description": "API Server for the e-commerce site",
   "main": "dist/index.js",
   "scripts": {
-    "debug-build": "babel src -d dist --source-maps",
-    "dev": "nodemon --exec babel-node src/index.js",
+    "debug-build": "babel ./src -d ./dist --source-maps",
+    "dev": "nodemon --exec babel-node src/index.js --trace-warnings",
     "build": "babel src -d dist",
     "start": "node dist/index.js -p $PORT",
     "test": "standard && jest",
