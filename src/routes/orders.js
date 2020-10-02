@@ -8,13 +8,13 @@ export default (app) => {
   app.route('/v1/orders')
     .get(
       orderPagination,
-      ({user, query : {skip, limit}}, res) => {        
+      ({ user, query: { skip, limit } }, res) => {
         OrderController
           .findUserOrders(user.data._id, skip, limit)
-          .then(orders => {      
+          .then((orders) => {
             res.send(orders);
-          })
-      }
+          });
+      },
     )
     .post(OrderController.createForPayment);
 
@@ -24,20 +24,17 @@ export default (app) => {
         res.status(400).end();
       }
       OrderController
-        .findById(req.params.orderId) 
+        .findById(req.params.orderId)
         .then((order) => {
           // Authorization check
           if (order.customer.equals(req.user.data._id)) {
             req.order = order;
             next();
-          } 
-          else {
+          } else {
             res.status(403).json({ error: 'Forbidden access' });
           }
         })
-        .catch(error => 
-          res.status(400).json(error) 
-        ); 
+        .catch((error) => res.status(400).json(error));
     })
     .get(OrderController.findOne)
     .put((req, res) => {
@@ -45,7 +42,7 @@ export default (app) => {
         OrderController.updateItems(req, res);
       } else if (req.body.billingAddress || req.body.contact) {
         OrderController.updateDetails(req, res);
-      } else if (req.body.status === 'paid') {
+      } else if (req.body.status === 'Paid') {
         OrderController.updateStatus(req, res);
       } else {
         res.status(400).json({ error: 'Invalid operation!' });

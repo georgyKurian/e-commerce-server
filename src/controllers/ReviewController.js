@@ -5,31 +5,26 @@ const reviewController = {};
 
 reviewController.findById = (reviewId) => ReviewModel.findById(reviewId);
 
-reviewController.findUserReviews = (userId, start, limit) => {
-  return ReviewModel
-    .find({ user: userId,  })
-    .sort({created_at: -1})
-    .skip(start)
-    .limit(limit)
-  };
+reviewController.findUserReviews = (userId, start, limit) => ReviewModel
+  .find({ user: userId })
+  .sort({ created_at: -1 })
+  .skip(start)
+  .limit(limit);
 
-reviewController.findProductReviews = (productId, start, limit) => {
-  return ReviewModel
+reviewController.findProductReviews = (productId, start, limit) => ReviewModel
   .find({ product: productId })
-  .sort({created_at: -1})
+  .sort({ created_at: -1 })
   .skip(start)
   .limit(limit)
-  .populate({path:'user',select:'username'})
+  .populate({ path: 'user', select: 'username' })
   .select({
     _id: 1,
     title: 1,
     comment: 1,
     created_at: 1,
     rating: 1,
-  })        
+  })
   .lean();
-  };
-
 
 reviewController.update = (req, res) => {
   req.order.update(req.body, (err, orders) => {
@@ -45,9 +40,8 @@ reviewController.delete = (req, res) => {
   OrderModel.findByIdAndDelete(req.order._id, (err, order) => {
     if (order) {
       res.send(order);
-    }
-    else if(error){
-      res.status(400).json({error});
+    } else if (error) {
+      res.status(400).json({ error });
     }
   });
 };
@@ -103,14 +97,14 @@ reviewController.updateItems = (req, res) => {
               .save()
               .then((updatedOrder) => {
                 const updatedOrderJSON = updatedOrder.toJSON();
-                updatedOrderJSON.paymentIntentSecret = clientSecret;            
-                res.send(updatedOrderJSON);                  
+                updatedOrderJSON.paymentIntentSecret = clientSecret;
+                res.send(updatedOrderJSON);
               });
           }
         });
     })
-    .catch((error)=>{
-      res.status(400).json({error});
+    .catch((error) => {
+      res.status(400).json({ error });
     });
 };
 
@@ -127,7 +121,7 @@ reviewController.updateDetails = (req, res) => {
 };
 
 reviewController.updateStatus = (req, res) => {
-  if(req.body.status === 'Paid' ) {
+  if (req.body.status === 'Paid') {
     req.order.status = 'paid';
   }
   req.order
@@ -137,8 +131,7 @@ reviewController.updateStatus = (req, res) => {
     })
     .catch((error) => {
       res.status(400).json({ error });
-    });    
+    });
 };
-
 
 export default reviewController;

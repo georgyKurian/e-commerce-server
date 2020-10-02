@@ -8,27 +8,30 @@ const productPagination = pagination(16);
 export default (app) => {
   app.get(
     '/v1/products',
-    productPagination, 
-    ({query : {ids, sortBy, skip, limit, ...filters}}, res) => {
+    productPagination,
+    ({
+      query: {
+        ids, sortBy, skip, limit, ...filters
+      },
+    }, res) => {
       if (ids) {
-        const idList = ids.split(",");
+        const idList = ids.split(',');
         ProductController
           .findProductsByIds(idList, skip, limit)
-          .then(products => {      
+          .then((products) => {
             res.send(products);
           });
-      }
-      else {
+      } else {
         ProductController
-        .findProducts(filters, sortBy, skip, limit)
-        .then(products => {      
-          res.send(products);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      }      
-    }
+          .findProducts(filters, sortBy, skip, limit)
+          .then((products) => {
+            res.send(products);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    },
   );
 
   app
@@ -38,14 +41,12 @@ export default (app) => {
         res.status(400).end();
       }
       ProductController
-        .findById(req.params.productId) 
+        .findById(req.params.productId)
         .then((product) => {
           req.product = product;
           next();
         })
-        .catch(error => 
-          res.status(400).json(error) 
-        ); 
+        .catch((error) => res.status(400).json(error));
     })
     .get((req, res) => {
       ReviewModel.aggregate([
@@ -57,21 +58,21 @@ export default (app) => {
             count: { $sum: 1 },
           },
         },
-      ])                   
-      .then((reviews) => {
-        const json = req.product.toJSON();              
-        if (reviews[0] !== undefined) {
-          json.avgRating = Math.round(reviews[0].rating);
-          json.reviewCount = reviews[0].count;
-        } else {
-          json.avgRating = 0;
-          json.reviewCount = 0;
-        }
-        res.json(json);
-      })
-      .catch((error)=>{
-        res.send(error);
-      });
+      ])
+        .then((reviews) => {
+          const json = req.product.toJSON();
+          if (reviews[0] !== undefined) {
+            json.avgRating = Math.round(reviews[0].rating);
+            json.reviewCount = reviews[0].count;
+          } else {
+            json.avgRating = 0;
+            json.reviewCount = 0;
+          }
+          res.json(json);
+        })
+        .catch((error) => {
+          res.send(error);
+        });
     });
 
   app.post('/v1/products', async (req, res) => {
