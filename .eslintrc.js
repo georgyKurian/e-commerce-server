@@ -3,7 +3,7 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb',
+    'airbnb-base',
   ],
   globals: {
     Atomics: 'readonly',
@@ -18,5 +18,3 @@ module.exports = {
     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   },
 };
-
-//module.exports = {}
