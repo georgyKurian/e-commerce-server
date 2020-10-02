@@ -1,27 +1,27 @@
+import mongoose from 'mongoose';
 import { ProductModel } from '../models/Product';
 import StripePaymentWrapper from '../helper/Stripe';
-import mongoose from 'mongoose';
 
 const productController = {};
 
 const sortByField = (field) => {
-  switch(field){
-    case 'price-low-to-high': return { price: 1};
-    case 'price-high-to-low': return { price: -1};
-    case 'newest': return { created_at: -1};
-    default: return { created_at: -1};
+  switch (field) {
+    case 'price-low-to-high': return { price: 1 };
+    case 'price-high-to-low': return { price: -1 };
+    case 'newest': return { created_at: -1 };
+    default: return { created_at: -1 };
   }
 };
 
-const filterFieldMap = (fieldKey,values) => {  
-  let queryObject = {};  
-  switch(fieldKey){
+const filterFieldMap = (fieldKey, values) => {
+  const queryObject = {};
+  switch (fieldKey) {
     case 'gender':
       queryObject[fieldKey] = values;
       return queryObject;
     case 'category':
     default:
-      queryObject[fieldKey] = new RegExp(`^${values}$`,'i');
+      queryObject[fieldKey] = new RegExp(`^${values}$`, 'i');
       return queryObject;
   }
 };
@@ -30,70 +30,60 @@ const filterQueryBuiilder = (filters) => {
   let queryObject = {};
   Object
     .keys(filters)
-    .forEach(filterKey => { 
-      const object = filterFieldMap(filterKey,filters[filterKey]);      
-      queryObject = { ...queryObject, ...object}
-    }
-  );
-  return Object.keys(filters).length > 0 ? queryObject:null;
-}
-
-
-productController.findById = (productId) => {
-  return ProductModel.findById(productId);
-}
-
-
-productController.findProducts = (filters, sortBy, start, limit) => {
-  return ProductModel
-    .find(filterQueryBuiilder(filters))
-    .sort(sortByField(sortBy))
-    .skip(start)
-    .limit(limit)
-    .select({
-      name:1,
-      price : 1,
-      category : 1,
-      color : 1,
-      gender : 1,
-      sport : 1,
-      productType : 1,
-      images: 1
-    })
-    .slice('images',4)
-    .lean()
+    .forEach((filterKey) => {
+      const object = filterFieldMap(filterKey, filters[filterKey]);
+      queryObject = { ...queryObject, ...object };
+    });
+  return Object.keys(filters).length > 0 ? queryObject : null;
 };
 
+productController.findById = (productId) => ProductModel.findById(productId);
 
-productController.findProductsByIds = (idList, start=0, limit=16) => {
-  const idObjectList = idList.map((productId) => new mongoose.Types.ObjectId(productId));
-
-  return ProductModel.find(
-   { _id: { $in: idObjectList } }
-  )
-  .sort({created_at: -1})
+productController.findProducts = (filters, sortBy, start, limit) => ProductModel
+  .find(filterQueryBuiilder(filters))
+  .sort(sortByField(sortBy))
   .skip(start)
   .limit(limit)
   .select({
-    name:1,
-    price : 1,
-    category : 1,
-    color : 1,
-    gender : 1,
-    sport : 1,
-    productType : 1,
-    images: 1
+    name: 1,
+    price: 1,
+    category: 1,
+    color: 1,
+    gender: 1,
+    sport: 1,
+    productType: 1,
+    images: 1,
   })
-  .slice('images',4)
-  .lean()
+  .slice('images', 4)
+  .lean();
+
+productController.findProductsByIds = (idList, start = 0, limit = 16) => {
+  const idObjectList = idList.map((productId) => new mongoose.Types.ObjectId(productId));
+
+  return ProductModel.find(
+    { _id: { $in: idObjectList } },
+  )
+    .sort({ created_at: -1 })
+    .skip(start)
+    .limit(limit)
+    .select({
+      name: 1,
+      price: 1,
+      category: 1,
+      color: 1,
+      gender: 1,
+      sport: 1,
+      productType: 1,
+      images: 1,
+    })
+    .slice('images', 4)
+    .lean();
 };
 
-
-/* 
+/*
 productController.findOne = (req, res) => {
   res.send(req.order);
 };
-
 
 productController.update = (req, res) => {
   req.order.update(req.body, (err, orders) => {
@@ -167,8 +157,8 @@ productController.updateItems = (req, res) => {
               .save()
               .then((updatedOrder) => {
                 const updatedOrderJSON = updatedOrder.toJSON();
-                updatedOrderJSON.paymentIntentSecret = clientSecret;            
-                res.send(updatedOrderJSON);                  
+                updatedOrderJSON.paymentIntentSecret = clientSecret;
+                res.send(updatedOrderJSON);
               });
           }
         });
@@ -201,7 +191,7 @@ productController.updateStatus = (req, res) => {
     })
     .catch((error) => {
       res.status(400).json({ error });
-    });    
+    });
 };
 
  */

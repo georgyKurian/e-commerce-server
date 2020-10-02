@@ -1,69 +1,67 @@
-import { ReviewModel } from '../models/Review';
 import mongoose from 'mongoose';
+import { ReviewModel } from '../models/Review';
 import ReviewController from '../controllers/ReviewController';
 import pagination from '../middlewear/pagination';
 
 const reviewPagination = pagination(10);
 
 export default (app) => {
-  app.
-  use(reviewPagination)
-  .get(
-    '/v1/reviews', 
-    ({query:{productId}, skip, limit}, res) => {
-      ReviewController
-        .findProductReviews(productId,skip, limit)
-        .then((reviews) => {
+  app
+    .use(reviewPagination)
+    .get(
+      '/v1/reviews',
+      ({ query: { productId }, skip, limit }, res) => {
+        ReviewController
+          .findProductReviews(productId, skip, limit)
+          .then((reviews) => {
             res.send(reviews);
-          } 
-        )
-    }
-  );
+          });
+      },
+    );
 
   app.get('/v1/reviews/summary', async (req, res) => {
     try {
       const { productId } = req.query;
       const productObjectId = new mongoose.Types.ObjectId(productId);
       const reviewSummary = await ReviewModel
-        .aggregate()        
+        .aggregate()
         .match({
-          product: productObjectId
-        })        
+          product: productObjectId,
+        })
         .group({
-          _id:'$rating',
-          noOfReviews: {$sum:1}
+          _id: '$rating',
+          noOfReviews: { $sum: 1 },
         })
         .project({
-          _id:0,
-          rating: "$_id",
-          noOfReviews:1
+          _id: 0,
+          rating: '$_id',
+          noOfReviews: 1,
         })
         .sort('rating');
 
-        const totalNoOfReviews = reviewSummary.reduce((acc,current)=> acc + current.noOfReviews, 0);
-        let avgRating = 0;
-        const reviewDataList = {};
+      const totalNoOfReviews = reviewSummary.reduce((acc, current) => acc + current.noOfReviews, 0);
+      let avgRating = 0;
+      const reviewDataList = {};
 
-        reviewSummary.forEach((ratingData) => {
-          let percentage = 0;
-          if( totalNoOfReviews && totalNoOfReviews !== 0 ) {
-            percentage = (ratingData.noOfReviews / totalNoOfReviews) * 100;
-            percentage =  Math.round( percentage );
-            avgRating += percentage * ratingData.rating;
-          }
-          reviewDataList[ratingData.rating] = {
-            noOfReviews: ratingData.noOfReviews,
-            percentage
-          }
-        });
-        const avergaeRating = 0; 
-    
-        
+      reviewSummary.forEach((ratingData) => {
+        let percentage = 0;
+        if (totalNoOfReviews && totalNoOfReviews !== 0) {
+          percentage = (ratingData.noOfReviews / totalNoOfReviews) * 100;
+          percentage = Math.round(percentage);
+          avgRating += percentage * ratingData.rating;
+        }
+        reviewDataList[ratingData.rating] = {
+          noOfReviews: ratingData.noOfReviews,
+          percentage,
+        };
+      });
+      const avergaeRating = 0;
+
       if (reviewDataList) {
         res.send({
-          avgRating: Math.round(avgRating/100),
+          avgRating: Math.round(avgRating / 100),
           totalNoOfReviews,
-          ratingSummary: reviewDataList
+          ratingSummary: reviewDataList,
         });
       } else {
         res.status(400).end();

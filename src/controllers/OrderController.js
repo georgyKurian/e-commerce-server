@@ -5,21 +5,18 @@ const orderController = {};
 
 orderController.findById = (orderId) => OrderModel.findById(orderId);
 
-orderController.findUserOrders = (userId, start, limit) => {
-  return OrderModel
-    .find({ customer: userId,  })
-    .sort({created_at: -1})
-    .skip(start)
-    .limit(limit)
-    .select({
-      paymentIntentId:0
-    })
-  };
+orderController.findUserOrders = (userId, start, limit) => OrderModel
+  .find({ customer: userId })
+  .sort({ created_at: -1 })
+  .skip(start)
+  .limit(limit)
+  .select({
+    paymentIntentId: 0,
+  });
 
 orderController.findOne = (req, res) => {
   res.send(req.order);
 };
-
 
 orderController.update = (req, res) => {
   req.order.update(req.body, (err, orders) => {
@@ -35,9 +32,8 @@ orderController.delete = (req, res) => {
   OrderModel.findByIdAndDelete(req.order._id, (err, order) => {
     if (order) {
       res.send(order);
-    }
-    else if(error){
-      res.status(400).json({error});
+    } else if (error) {
+      res.status(400).json({ error });
     }
   });
 };
@@ -93,14 +89,14 @@ orderController.updateItems = (req, res) => {
               .save()
               .then((updatedOrder) => {
                 const updatedOrderJSON = updatedOrder.toJSON();
-                updatedOrderJSON.paymentIntentSecret = clientSecret;            
-                res.send(updatedOrderJSON);                  
+                updatedOrderJSON.paymentIntentSecret = clientSecret;
+                res.send(updatedOrderJSON);
               });
           }
         });
     })
-    .catch((error)=>{
-      res.status(400).json({error});
+    .catch((error) => {
+      res.status(400).json({ error });
     });
 };
 
@@ -117,7 +113,7 @@ orderController.updateDetails = (req, res) => {
 };
 
 orderController.updateStatus = (req, res) => {
-  if(req.body.status === 'Paid' ) {
+  if (req.body.status === 'Paid') {
     req.order.status = 'paid';
     req.order
       .save()
@@ -127,8 +123,7 @@ orderController.updateStatus = (req, res) => {
       .catch((error) => {
         res.status(400).json({ error });
       });
-  }      
+  }
 };
-
 
 export default orderController;

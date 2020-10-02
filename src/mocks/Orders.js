@@ -8,19 +8,18 @@ export default (userList, productList) => {
     const fromDate = new Date(
       new Date().setFullYear(new Date().getFullYear() - 1),
     );
-    
 
     const user = faker.random.arrayElement(userList);
-    const products = faker.custom.randomSubArray(productList, true, 5).map((product)=>({
+    const products = faker.custom.randomSubArray(productList, true, 5).map((product) => ({
       ...product.toObject(),
-      quantity:faker.random.number({min:1,max:3}),
+      quantity: faker.random.number({ min: 1, max: 3 }),
     }));
     orderList.push({
       customer: user._id,
       created_at: faker.date.between(fromDate, toDate).getTime(),
       status: 'completed',
       paymentIntentId: faker.internet.password(),
-      products: products,
+      products,
       contact: {
         fullName: faker.fake('{{name.firstName}} {{name.lastName}}'),
         phoneNumber: faker.phone.phoneNumber('###-###-####'),

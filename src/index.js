@@ -26,7 +26,6 @@ const corsOptions = {
 const webRouter = express.Router();
 const stripeWebHookRouter = express.Router();
 
-
 // middlewears
 app.use(
   responseTime((req, res, time) => {
@@ -39,9 +38,8 @@ app.use(cors(process.env !== 'production' ? undefined : corsOptions));
 app.use(logger);
 
 // Web hook
-app.use('/v1/stripe/webhook',stripeWebHookRouter);
+app.use('/v1/stripe/webhook', stripeWebHookRouter);
 getStripeHookRoutes(stripeWebHookRouter);
-
 
 // App Routes Middlewear
 webRouter.use(bodyParser.json());
@@ -56,7 +54,7 @@ getAuthRoutes(webRouter);
 getOrderRoutes(webRouter);
 getReviewRoutes(webRouter);
 
-app.use('',webRouter);
+app.use('', webRouter);
 
 // Webhook Route
 

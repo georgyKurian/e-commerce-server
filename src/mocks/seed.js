@@ -24,7 +24,7 @@ db.once('open', () => {
       })
       .catch((e) => {
         console.error(e);
-      }))
+      })),
   );
 
   promises.push(
@@ -41,11 +41,10 @@ db.once('open', () => {
               })
           ))
       )
-      .catch((e) => {
-        console.error(e);
-      }))
+        .catch((e) => {
+          console.error(e);
+        })),
   );
-    
 
   promises.push(
     ReviewModel.deleteMany()
