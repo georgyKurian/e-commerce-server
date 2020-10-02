@@ -20,7 +20,6 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8085; // process.env.PORT
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN,
   optionsSuccessStatus: 200,
 };
 const webRouter = express.Router();
@@ -34,7 +33,7 @@ app.use(
 );
 
 app.use(helmet());
-app.use(cors(process.env !== 'production' ? undefined : corsOptions));
+app.use(cors(corsOptions));
 app.use(logger);
 
 // Web hook
