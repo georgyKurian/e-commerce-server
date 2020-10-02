@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import mongoose, { Schema } from 'mongoose';
 import mongooseHidden from 'mongoose-hidden';
 import { ProductModel } from './Product';
@@ -29,10 +30,10 @@ export const OrderSchema = new Schema({
       ORDER_STATUS.PENDING,
       ORDER_STATUS.PAYMENT_INITIATED,
       ORDER_STATUS.PROCESSING,
-      ORDER_STATUS.COMPLETED,
-      ORDER_STATUS.AMOUNT_MISMATCH,
-      ORDER_STATUS.FAILED,
       ORDER_STATUS.CANCELLED,
+      ORDER_STATUS.FAILED,
+      ORDER_STATUS.AMOUNT_MISMATCH,
+      ORDER_STATUS.COMPLETED,
       ORDER_STATUS.REFUNDED,
     ],
     required: true,
@@ -107,7 +108,7 @@ OrderSchema.methods.setProducts = function (items) {
   return null;
 };
 
-OrderSchema.pre('save', function (next) {
+OrderSchema.pre('save', function save(next) {
   const oldStatus = this._status;
   if (this.isModified('status')) {
     // Some condition that fires before save if the email changes ... or something.
@@ -117,7 +118,7 @@ OrderSchema.pre('save', function (next) {
   next();
 });
 
-OrderSchema.virtual('totalAmount').get(function () {
+OrderSchema.virtual('totalAmount').get(function totalAmount() {
   return this.products.reduce(
     (total, product) => (
       total + product.price * product.quantity

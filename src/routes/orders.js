@@ -42,7 +42,7 @@ export default (app) => {
         OrderController.updateItems(req, res);
       } else if (req.body.billingAddress || req.body.contact) {
         OrderController.updateDetails(req, res);
-      } else if (req.body.status === 'paid') {
+      } else if (req.body.status === 'Paid') {
         OrderController.updateStatus(req, res);
       } else {
         res.status(400).json({ error: 'Invalid operation!' });

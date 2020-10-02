@@ -1,4 +1,4 @@
-import { OrderModel } from '../models/Order';
+import { OrderModel, ORDER_STATUS } from '../models/Order';
 import StripePaymentWrapper from '../helper/Stripe';
 
 const orderController = {};
@@ -114,11 +114,11 @@ orderController.updateDetails = (req, res) => {
 
 orderController.updateStatus = (req, res) => {
   if (req.body.status === 'Paid') {
-    req.order.status = 'paid';
+    req.order.status = ORDER_STATUS.PAYMENT_INITIATED;
     req.order
       .save()
-      .then(() => {
-        res.status(200).end();
+      .then((order) => {
+        res.status(200).json(order);
       })
       .catch((error) => {
         res.status(400).json({ error });
