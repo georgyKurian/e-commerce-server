@@ -15,8 +15,7 @@
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
       "runtimeArgs": [
-        "--nolazy",
-        "--trace-warnings",
+        "–-inspect",
       ],
       "env": {
         "NODE_ENV": "development"

@@ -3,7 +3,7 @@ import { OrderModel, ORDER_STATUS } from '../models/Order';
 const stripe = require('stripe')('sk_test_K8NejsGbnfInosovpfHLadFV001xXflaVN');
 const bodyParser = require('body-parser');
 
-const endpointSecret = 'whsec_l1CaqgoRdUzO75LxNtI4ED7tvR3JOnQD';
+const endpointSecret = process.env.STRIPE_WEBHOOK_SIGNING_SECRET;
 const paymentIntentRegexp = new RegExp(/\bpayment_intent.([a-z])*$/, '');
 
 export default (router) => {
@@ -25,7 +25,7 @@ export default (router) => {
             endpointSecret,
           );
         } catch (err) {
-          res.status(400).send(`Webhook Error: ${err.message}`);
+          return res.status(400).send(`Webhook Error: ${err.message}`);
         }
 
         if (paymentIntentRegexp.test(event.type)) {
@@ -34,7 +34,7 @@ export default (router) => {
           return res.status(400).end();
         }
 
-        OrderModel.findOne({ paymentIntentId: paymentIntent.id }).then((order) => {
+        return OrderModel.findOne({ paymentIntentId: paymentIntent.id }).then((order) => {
           if (order) {
             switch (event.type) {
               case 'payment_intent.amount_capturable_updated':
@@ -60,7 +60,7 @@ export default (router) => {
         });
       } catch (e) {
         console.error(e);
-        res.status(400).end('Exception ocuured!');
+        return res.status(400).end('Exception ocuured!');
       }
     },
   );
