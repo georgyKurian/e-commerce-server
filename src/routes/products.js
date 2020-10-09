@@ -2,6 +2,7 @@ import { ProductModel } from '../models/Product';
 import { ReviewModel } from '../models/Review';
 import pagination from '../middlewear/pagination';
 import ProductController from '../controllers/ProductController';
+import productController from '../controllers/ProductController';
 
 const productPagination = pagination(16);
 
@@ -31,6 +32,17 @@ export default (app) => {
             console.error(error);
           });
       }
+    },
+  );
+
+  app.get(
+    '/v1/products/id',
+    (req, res) => {
+      ProductController
+        .findAllProductIds()
+        .then((products) => {
+          res.send(products.map((product) => (product._id)));
+        });
     },
   );
 
