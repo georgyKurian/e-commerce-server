@@ -57,6 +57,13 @@ productController.findProducts = (filters, sortBy, start, limit) => ProductModel
   .slice('images', 4)
   .lean();
 
+productController.findAllProductIds = () => ProductModel
+  .find()
+  .select({
+    _id: 1,
+  })
+  .lean();
+
 productController.findProductsByIds = (idList, start = 0, limit = 16) => {
   const idObjectList = idList.map((productId) => new mongoose.Types.ObjectId(productId));
 
